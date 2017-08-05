@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.7" type="template" client="site" method="upgrade">
+	<name>${name}</name>
+	<author>${author}</author>
+	<creationDate>${creationDate}</creationDate>
+	<copyright>${copyright}</copyright>
+	<license>>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>${authorEmail}</authorEmail>
+	<authorUrl>${authorUrl}</authorUrl>
+	<version>0.5.0</version>
+	<description>${LANGUAGE_CONSTANT}_DESCRIPTION</description>
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.tpl_${name}.ini</language>
+		<language tag="en-GB">en-GB/en-GB.tpl_${name}.sys.ini</language>
+		<language tag="ru-RU">ru-RU/ru-RU.tpl_${name}.ini</language>
+		<language tag="ru-RU">ru-RU/ru-RU.tpl_${name}.sys.ini</language>
+	</languages>
+	<files>
+		<folder>css</folder>
+		<folder>html</folder>
+		<folder>images</folder>
+		<folder>layouts</folder>
+		<folder>js</folder>
+		<folder>params</folder>
+		<filename>favicon.ico</filename>
+		<filename>index.php</filename>
+		<filename>templateDetails.xml</filename>
+	</files>
+	<positions>
+		<position>scripts</position>
+	</positions>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+			</fieldset>	
+		</fields>
+	</config>
+</extension>

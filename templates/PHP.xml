@@ -1,0 +1,17 @@
+<templateSet group="PHP">
+  <template name="echop" value="echo '&lt;pre&gt;', print_r($END$, true), '&lt;/pre&gt;';" description="&lt;pre&gt;print_r" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="echov" value="echo '&lt;pre&gt;', var_dump($END$), '&lt;/pre&gt;';" description="&lt;pre&gt;var_dump" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="obj" value="new stdClass();$END$" description="new stdClass" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+</templateSet>

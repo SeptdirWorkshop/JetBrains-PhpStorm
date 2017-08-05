@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.7" type="component" method="upgrade">
+	<name>${LANGUAGE_CONSTANT}</name>
+	<author>${author}</author>
+	<creationDate>${creationDate}</creationDate>
+	<copyright>${copyright}</copyright>
+	<license>>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>${authorEmail}</authorEmail>
+	<authorUrl>${authorUrl}</authorUrl>
+	<version>0.5.0</version>
+	<description>${LANGUAGE_CONSTANT}_DESCRIPTION</description>
+	<install>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+		</sql>
+	</install>
+	<uninstall>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+		</sql>
+	</uninstall>
+	<files folder="site">
+		<folder>controllers</folder>
+		<folder>helpers</folder>
+		<folder>models</folder>
+		<folder>views</folder>
+		<filename>controller.php</filename>
+		<filename>${name}.php</filename>
+		<filename>router.php</filename>
+	</files>
+	<languages folder="site">
+		<language tag="en-GB">language/en-GB/en-GB.com_${name}.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.com_${name}.sys.ini</language>
+		<language tag="ru-RU">language/ru-RU/ru-RU.com_${name}.ini</language>
+		<language tag="ru-RU">language/ru-RU/ru-RU.com_${name}.sys.ini</language>
+	</languages>
+	<administration>
+		<menu>${LANGUAGE_CONSTANT}</menu>
+		<submenu>
+			<menu link="option=${name}" view="name" img="class:answers" alt="">${LANGUAGE_CONSTANT}</menu>
+		</submenu>
+		<files folder="admin">
+			<folder>assets</folder>
+			<folder>controllers</folder>
+			<folder>helpers</folder>
+			<folder>models</folder>
+			<folder>sql</folder>
+			<folder>views</folder>
+			<folder>tables</folder>
+			<filename>access.xml</filename>
+			<filename>config.xml</filename>
+			<filename>controller.php</filename>
+			<filename>${name}.php</filename>
+		</files>
+		<languages folder="admin">
+			<language tag="en-GB">language/en-GB/en-GB.com_${name}.ini</language>
+			<language tag="en-GB">language/en-GB/en-GB.com_${name}.sys.ini</language>
+			<language tag="ru-RU">language/ru-RU/ru-RU.com_${name}.ini</language>
+			<language tag="ru-RU">language/ru-RU/ru-RU.com_${name}.sys.ini</language>
+		</languages>
+	</administration>
+</extension>

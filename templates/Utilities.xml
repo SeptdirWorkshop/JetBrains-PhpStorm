@@ -1,0 +1,7 @@
+<templateSet group="Utilities">
+  <template name="cdate_my" value="July 2017$END$" description="Current month and year" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="OTHER" value="true" />
+    </context>
+  </template>
+</templateSet>
