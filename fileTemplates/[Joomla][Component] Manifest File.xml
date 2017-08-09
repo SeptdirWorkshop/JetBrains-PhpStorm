@@ -37,7 +37,7 @@
 	<administration>
 		<menu>${LANGUAGE_CONSTANT}</menu>
 		<submenu>
-			<menu link="option=${FILE_NAME}" view="name" img="class:answers" alt="">${LANGUAGE_CONSTANT}</menu>
+			<menu link="option=${NAME}" view="name" img="class:answers" alt="">${LANGUAGE_CONSTANT}</menu>
 		</submenu>
 		<files folder="admin">
 			<folder>assets</folder>
