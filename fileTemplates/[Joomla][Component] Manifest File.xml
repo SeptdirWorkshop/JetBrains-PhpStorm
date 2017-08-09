@@ -4,10 +4,10 @@
 	<author>${author}</author>
 	<creationDate>${creationDate}</creationDate>
 	<copyright>${copyright}</copyright>
-	<license>>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<license>>${license}</license>
 	<authorEmail>${authorEmail}</authorEmail>
 	<authorUrl>${authorUrl}</authorUrl>
-	<version>0.5.0</version>
+	<version>${version}</version>
 	<description>${LANGUAGE_CONSTANT}_DESCRIPTION</description>
 	<install>
 		<sql>
@@ -25,19 +25,19 @@
 		<folder>models</folder>
 		<folder>views</folder>
 		<filename>controller.php</filename>
-		<filename>${name}.php</filename>
+		<filename>${NAME}.php</filename>
 		<filename>router.php</filename>
 	</files>
 	<languages folder="site">
-		<language tag="en-GB">language/en-GB/en-GB.com_${name}.ini</language>
-		<language tag="en-GB">language/en-GB/en-GB.com_${name}.sys.ini</language>
-		<language tag="ru-RU">language/ru-RU/ru-RU.com_${name}.ini</language>
-		<language tag="ru-RU">language/ru-RU/ru-RU.com_${name}.sys.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.com_${NAME}.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.com_${NAME}.sys.ini</language>
+		<language tag="ru-RU">language/ru-RU/ru-RU.com_${NAME}.ini</language>
+		<language tag="ru-RU">language/ru-RU/ru-RU.com_${NAME}.sys.ini</language>
 	</languages>
 	<administration>
 		<menu>${LANGUAGE_CONSTANT}</menu>
 		<submenu>
-			<menu link="option=${name}" view="name" img="class:answers" alt="">${LANGUAGE_CONSTANT}</menu>
+			<menu link="option=${FILE_NAME}" view="name" img="class:answers" alt="">${LANGUAGE_CONSTANT}</menu>
 		</submenu>
 		<files folder="admin">
 			<folder>assets</folder>
@@ -50,13 +50,13 @@
 			<filename>access.xml</filename>
 			<filename>config.xml</filename>
 			<filename>controller.php</filename>
-			<filename>${name}.php</filename>
+			<filename>${NAME}.php</filename>
 		</files>
 		<languages folder="admin">
-			<language tag="en-GB">language/en-GB/en-GB.com_${name}.ini</language>
-			<language tag="en-GB">language/en-GB/en-GB.com_${name}.sys.ini</language>
-			<language tag="ru-RU">language/ru-RU/ru-RU.com_${name}.ini</language>
-			<language tag="ru-RU">language/ru-RU/ru-RU.com_${name}.sys.ini</language>
+			<language tag="en-GB">language/en-GB/en-GB.com_${NAME}.ini</language>
+			<language tag="en-GB">language/en-GB/en-GB.com_${NAME}.sys.ini</language>
+			<language tag="ru-RU">language/ru-RU/ru-RU.com_${NAME}.ini</language>
+			<language tag="ru-RU">language/ru-RU/ru-RU.com_${NAME}.sys.ini</language>
 		</languages>
 	</administration>
 </extension>

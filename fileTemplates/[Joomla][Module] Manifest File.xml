@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="3.7" type="module" client="site" method="upgrade">
+<extension version="3.7" type="module" client="${client}" method="upgrade">
 	<name>${LANGUAGE_CONSTANT}</name>
 	<author>${author}</author>
 	<creationDate>${creationDate}</creationDate>
 	<copyright>${copyright}</copyright>
-	<license>>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<license>>${license}</license>
 	<authorEmail>${authorEmail}</authorEmail>
 	<authorUrl>${authorUrl}</authorUrl>
-	<version>0.5.0</version>
+	<version>${version}</version>
 	<description>${LANGUAGE_CONSTANT}_DESCRIPTION</description>
 	<languages folder="language">
-		<language tag="en-GB">en-GB/en-GB.mod_${name}.ini</language>
-		<language tag="en-GB">en-GB/en-GB.mod_${name}.sys.ini</language>
-		<language tag="ru-RU">ru-RU/ru-RU.mod_${name}.ini</language>
-		<language tag="ru-RU">ru-RU/ru-RU.mod_${name}.sys.ini</language>
+		<language tag="en-GB">en-GB/en-GB.${NAME}.ini</language>
+		<language tag="en-GB">en-GB/en-GB.${NAME}.sys.ini</language>
+		<language tag="ru-RU">ru-RU/ru-RU.${NAME}.ini</language>
+		<language tag="ru-RU">ru-RU/ru-RU.${NAME}.sys.ini</language>
 	</languages>
 	<files>
-		<filename module="${name}">mod_${name}.php</filename>
+		<filename module="${NAME}">${NAME}.php</filename>
 		<folder>tmpl</folder>
 	</files>
 	<config>

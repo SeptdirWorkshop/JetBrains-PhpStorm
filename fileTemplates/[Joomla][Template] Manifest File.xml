@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="3.7" type="template" client="site" method="upgrade">
-	<name>${name}</name>
+<extension version="3.7" type="template" client="${client}" method="upgrade">
+	<name>${templateName}</name>
 	<author>${author}</author>
 	<creationDate>${creationDate}</creationDate>
 	<copyright>${copyright}</copyright>
-	<license>>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<license>>${license}</license>
 	<authorEmail>${authorEmail}</authorEmail>
 	<authorUrl>${authorUrl}</authorUrl>
-	<version>0.5.0</version>
+	<version>${version}</version>
 	<description>${LANGUAGE_CONSTANT}_DESCRIPTION</description>
 	<languages folder="language">
-		<language tag="en-GB">en-GB/en-GB.tpl_${name}.ini</language>
-		<language tag="en-GB">en-GB/en-GB.tpl_${name}.sys.ini</language>
-		<language tag="ru-RU">ru-RU/ru-RU.tpl_${name}.ini</language>
-		<language tag="ru-RU">ru-RU/ru-RU.tpl_${name}.sys.ini</language>
+		<language tag="en-GB">en-GB/en-GB.tpl_${templateName}.ini</language>
+		<language tag="en-GB">en-GB/en-GB.tpl_${templateName}.sys.ini</language>
+		<language tag="ru-RU">ru-RU/ru-RU.tpl_${templateName}.ini</language>
+		<language tag="ru-RU">ru-RU/ru-RU.tpl_${templateName}.sys.ini</language>
 	</languages>
 	<files>
 		<folder>css</folder>
