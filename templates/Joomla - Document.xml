@@ -1,5 +1,5 @@
 <templateSet group="Joomla - Document">
-  <template name="jdoc" value="JFactory::getDocument();$END$" description="JFactory::getDocument" toReformat="false" toShortenFQNames="true">
+  <template name="jdoc" value="JFactory::getDocument()$END$" description="JFactory::getDocument" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>

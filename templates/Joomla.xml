@@ -4,7 +4,7 @@
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="japp" value="JFactory::getApplication();$END$" description="JFactory::getApplication" toReformat="false" toShortenFQNames="true">
+  <template name="japp" value="JFactory::getApplication()$END$" description="JFactory::getApplication" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>
