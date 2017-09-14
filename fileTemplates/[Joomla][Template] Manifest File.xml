@@ -21,8 +21,8 @@
 		<folder>images</folder>
 		<folder>layouts</folder>
 		<folder>js</folder>
-		<folder>params</folder>
 		<filename>favicon.ico</filename>
+		<filename>helper.php</filename>
 		<filename>index.php</filename>
 		<filename>templateDetails.xml</filename>
 	</files>
