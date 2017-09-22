@@ -4,7 +4,7 @@
 	<author>${author}</author>
 	<creationDate>${creationDate}</creationDate>
 	<copyright>${copyright}</copyright>
-	<license>>${license}</license>
+	<license>${license}</license>
 	<authorEmail>${authorEmail}</authorEmail>
 	<authorUrl>${authorUrl}</authorUrl>
 	<version>${version}</version>
