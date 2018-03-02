@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.8" type="package" method="upgrade">
+	<name>${LANGUAGE_CONSTANT}</name>
+	<packagename>${packagename}</packagename>
+	<author>${author}</author>
+	<creationDate>${creationDate}</creationDate>
+	<copyright>${copyright}</copyright>
+	<license>${license}</license>
+	<authorEmail>${authorEmail}</authorEmail>
+	<authorUrl>${authorUrl}</authorUrl>
+	<version>${version}</version>
+	<description>${LANGUAGE_CONSTANT}_DESCRIPTION</description>
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.${NAME}.sys.ini</language>
+		<language tag="ru-RU">ru-RU/ru-RU.${NAME}.sys.ini</language>
+	</languages>
+	<files>
+		<folder type="component" id="com_name">com_sefwizard</folder>
+		<folder type="plugin" id="name" group=""></folder>
+		<folder type="module" id="mod_name" client="site/administrator"></folder>
+	</files>
+</extension>
