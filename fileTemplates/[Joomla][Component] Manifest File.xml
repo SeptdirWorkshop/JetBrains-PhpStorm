@@ -37,10 +37,9 @@
 	<administration>
 		<menu>${LANGUAGE_CONSTANT}</menu>
 		<submenu>
-			<menu link="option=${NAME}" view="name" img="class:answers" alt="">${LANGUAGE_CONSTANT}</menu>
+			<menu option="com_${NAME}" view="name">${LANGUAGE_CONSTANT}_</menu>
 		</submenu>
 		<files folder="admin">
-			<folder>assets</folder>
 			<folder>controllers</folder>
 			<folder>helpers</folder>
 			<folder>models</folder>
@@ -59,4 +58,14 @@
 			<language tag="ru-RU">language/ru-RU/ru-RU.com_${NAME}.sys.ini</language>
 		</languages>
 	</administration>
+	<media destination="com_${NAME}" folder="media">
+		<folder>css</folder>
+		<folder>js</folder>
+		<folder>images</folder>
+	</media>
+	<updateservers>
+		<server type="extension" priority="1" name="${LANGUAGE_CONSTANT}">
+			https://site.com/update?extension=com_${NAME}
+		</server>
+	</updateservers>
 </extension>

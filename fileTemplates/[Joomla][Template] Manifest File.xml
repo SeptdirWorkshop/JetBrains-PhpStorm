@@ -35,4 +35,9 @@
 			</fieldset>	
 		</fields>
 	</config>
+	<updateservers>
+		<server type="extension" priority="1" name="${LANGUAGE_CONSTANT}">
+			https://site.com/update?extension=tpl_${templateName}
+		</server>
+	</updateservers>
 </extension>

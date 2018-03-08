@@ -49,4 +49,14 @@
 			</fieldset>
 		</fields>
 	</config>
+	<media destination="${NAME}" folder="media">
+		<folder>css</folder>
+		<folder>js</folder>
+		<folder>images</folder>
+	</media>
+	<updateservers>
+		<server type="extension" priority="1" name="${LANGUAGE_CONSTANT}">
+			https://site.com/update?extension=${NAME}
+		</server>
+	</updateservers>
 </extension>

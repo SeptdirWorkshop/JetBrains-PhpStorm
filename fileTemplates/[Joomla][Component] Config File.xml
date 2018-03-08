@@ -10,7 +10,7 @@
  			class="inputbox"
  			validate="rules"
  			filter="rules"
- 			component="com_${name}"
+ 			component="${component}"
  			section="component" />
 	</fieldset>
 </config>
