@@ -4,24 +4,4 @@
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="japp" value="JFactory::getApplication()$END$" description="JFactory::getApplication" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="jreg" value="new JRegistry($END$);" description="joomla registry" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="jobj" value="new JObject;$END$" description="" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
-  <template name="jconf" value="JFactory::getConfig();$END$" description="JFactory::getConfig" toReformat="false" toShortenFQNames="true">
-    <context>
-      <option name="PHP" value="true" />
-    </context>
-  </template>
 </templateSet>
