@@ -15,12 +15,12 @@
 		<language tag="ru-RU">ru-RU/ru-RU.${NAME}.sys.ini</language>
 	</languages>
 	<files>
-		<folder type="component" id="com_name">com_name</folder>
-		<folder type="plugin" id="name" group=""></folder>
+		<folder type="component" id="com_name"></folder>
 		<folder type="module" id="mod_name" client="site/administrator"></folder>
+		<folder type="plugin" id="name" group=""></folder>
 	</files>
 	<updateservers>
-		<server type="extension" priority="1" name="${LANGUAGE_CONSTANT}">
+		<server type="extension" priority="1" name="${PROJECT_NAME}">
 			https://site.com/update?extension=${NAME}
 		</server>
 	</updateservers>

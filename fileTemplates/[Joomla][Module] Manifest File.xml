@@ -55,7 +55,7 @@
 		<folder>images</folder>
 	</media>
 	<updateservers>
-		<server type="extension" priority="1" name="${LANGUAGE_CONSTANT}">
+		<server type="extension" priority="1" name="${PROJECT_NAME}">
 			https://site.com/update?extension=${NAME}
 		</server>
 	</updateservers>
