@@ -4,8 +4,8 @@ class ProjectTask extends Task
 {
 	protected $action = null;
 	protected $name = null;
-	protected $release = null;
-	protected $dev = null;
+	protected $version = null;
+	protected $devVersion = null;
 	protected $root = null;
 
 	public function setAction($action)
@@ -18,14 +18,20 @@ class ProjectTask extends Task
 		$this->name = $name;
 	}
 
-	public function setRelease($release): void
+	public function setVersion($version)
 	{
-		$this->release = $release;
-	}
+		$this->version = $version;
 
-	public function setDev($dev)
-	{
-		$this->dev = $dev;
+		$version    = explode('.', $version);
+		$count      = count($version);
+		$devVersion = array();
+		foreach ($version as $i => $number)
+		{
+			$number       = (int) $number;
+			$devVersion[] = (++$i == $count) ? ++$number . '-dev' : $number;
+		}
+
+		$this->devVersion = implode('.', $devVersion);
 	}
 
 	public function setRoot($root)
@@ -42,40 +48,32 @@ class ProjectTask extends Task
 
 	protected function info()
 	{
-		echo '==== Phing Info ===' . PHP_EOL
+		echo '==== Project Info ===' . PHP_EOL
 			. 'Name               ' . $this->name . PHP_EOL
 			. '[RELEASE] Version  ' . $this->release . PHP_EOL
 			. '[RELEASE] Package  ' . $this->getPackageName() . PHP_EOL
-			. '[DEV] Version      ' . $this->dev . PHP_EOL
+			. '[DEV] Version      ' . $this->devVersion . PHP_EOL
 			. '[DEV] Package      ' . $this->getPackageName(true) . PHP_EOL
-			. 'Base Directory     ' . realpath($this->base) . PHP_EOL;
+			. 'Base Directory     ' . realpath($this->root) . PHP_EOL;
 	}
 
 	protected function prepareRelease()
 	{
-		echo '==== Prepare ' . $this->name . ' ' . $this->release . ' Release ===' . PHP_EOL;
+		echo '==== Prepare ' . $this->name . ' ' . $this->version . ' Release ===' . PHP_EOL;
 
-		echo 'Change version ....... ';
-		echo ($files = $this->changeVersion($this->release)) ? 'OK' : 'ERROR';
-		echo PHP_EOL;
-
-		echo 'Set version .......... ';
-		echo ($this->setVersion($this->release, $files)) ? 'OK' : 'ERROR';
+		echo 'Replace version ....... ';
+		echo ($files = $this->replaceVersion($this->version)) ? 'OK' : 'ERROR';
 		echo PHP_EOL;
 
 		$date = date('F Y');
-		echo 'Change date .......... ';
-		echo ($files = $this->changeDate($date, $files)) ? 'OK' : 'ERROR';
-		echo PHP_EOL;
-
-		echo 'Set date ............. ';
-		echo ($this->changeDate($date, $files)) ? 'OK' : 'ERROR';
+		echo 'Replace date .......... ';
+		echo ($files = $this->replaceDate($date, $files)) ? 'OK' : 'ERROR';
 		echo PHP_EOL;
 	}
 
 	protected function packageRelease()
 	{
-		echo '==== Package ' . $this->name . ' ' . $this->release . ' Release ===' . PHP_EOL;
+		echo '==== Package ' . $this->name . ' ' . $this->version . ' Release ===' . PHP_EOL;
 		echo 'Create package ....... ';
 		echo ($files = $this->createPackage($this->getPackageName())) ? 'OK' : 'ERROR';
 		echo PHP_EOL;
@@ -83,23 +81,98 @@ class ProjectTask extends Task
 
 	protected function prepareDev()
 	{
-		echo '==== Prepare ' . $this->name . ' ' . $this->dev . ' Dev ===' . PHP_EOL;
+		echo '==== Prepare ' . $this->name . ' ' . $this->devVersion . ' Dev ===' . PHP_EOL;
 
-		echo 'Change version ................... ';
-		echo ($files = $this->changeVersion($this->dev)) ? 'OK' : 'ERROR';
+		echo 'Replace version ................... ';
+		echo ($files = $this->replaceVersion($this->devVersion)) ? 'OK' : 'ERROR';
 		echo PHP_EOL;
 
-		echo 'Change PhpStorm copyrights ....... ';
-		echo ($files = $this->changePhpStormCopyrights($this->dev, date('F Y'))) ? 'OK' : 'ERROR';
+		echo 'Check PhpStorm copyrights ....... ';
+		echo ($files = $this->checkPhpStormCopyrights('__DEPLOY_VERSION__', date('F Y'))) ? 'OK' : 'ERROR';
 		echo PHP_EOL;
 	}
 
 	protected function packageDev()
 	{
-		echo '==== Package ' . $this->name . ' ' . $this->dev . ' Dev ===' . PHP_EOL;
+		echo '==== Package ' . $this->name . ' ' . $this->devVersion . ' Dev ===' . PHP_EOL;
 		echo 'Create package ....... ';
 		echo ($files = $this->createPackage($this->getPackageName(true))) ? 'OK' : 'ERROR';
 		echo PHP_EOL;
+	}
+
+	protected function replaceVersion($version = '', $files = array())
+	{
+		$root  = $this->root . DIRECTORY_SEPARATOR;
+		$files = (!empty($files)) ? $files
+			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', '.gitignore', 'LICENSE', '*.md'));
+
+		if (empty($files)) return false;
+
+		$dev           = ($version == $this->devVersion);
+		$docVersion    = ($dev) ? '__DEPLOY_VERSION__' : $version;
+		$deployVersion = ($dev) ? '__DEPLOY_VERSION__' : $version;
+		foreach ($files as $path)
+		{
+			$file     = new PhingFile($root, $path);
+			$filename = $file->getAbsolutePath();
+			$original = file_get_contents($filename);
+			$replace  = preg_replace('/@version(\s*)(.?)*/', '@version${1}' . $docVersion, $original);
+			$replace  = preg_replace('/\<version\>(.?)*<\/version\>/', '<version>' . $version . '</version>', $replace);
+			$replace  = str_replace('__DEPLOY_VERSION__', $deployVersion, $replace);
+			if ($original != $replace)
+			{
+				file_put_contents($filename, $replace);
+			}
+		}
+
+		return $files;
+	}
+
+	protected function checkPhpStormCopyrights($version = '', $date = '')
+	{
+		$root = $this->root . DIRECTORY_SEPARATOR . '.idea/copyright';
+		if (!$files = $this->getFiles($root, array('profiles_settings.xml'))) return false;
+
+		foreach ($files as $path)
+		{
+			$filename = '../.idea/copyright/' . $path;
+			$original = file_get_contents($filename);
+			$replace  = preg_replace('/@version(\s*).+?\&#10/', '@version${1}' . $version . '&#10', $original);
+			$replace  = preg_replace('/@date(\s*).+?\&#10/', '@date${1}' . $date . '&#10;', $replace);
+
+			if ($original != $replace)
+			{
+				file_put_contents($filename, $replace);
+			}
+		}
+
+		return true;
+	}
+
+	protected function replaceDate($date = '', $files = array())
+	{
+		$root  = $this->root . DIRECTORY_SEPARATOR;
+		$files = (!empty($files)) ? $files
+			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', '.gitignore', 'LICENSE', '*.md'));
+
+		if (empty($files)) return false;
+
+		foreach ($files as $path)
+		{
+			$file     = new PhingFile($root, $path);
+			$filename = $file->getAbsolutePath();
+			$original = file_get_contents($filename);
+			$replace  = preg_replace('/@date(\s*)(.?)*/', '@date${1}' . $date, $original);
+			$replace  = preg_replace('/\<date\>(.?)*<\/date\>/', '<date>' . $date . '</date>', $replace);
+			$replace  = preg_replace('/\<creationDate\>(.?)*<\/creationDate\>/', '<creationDate>' . $date . '</creationDate>', $replace);
+			$replace  = str_replace('__DEPLOY_DATE__', $date, $replace);
+			if ($original != $replace)
+			{
+				file_put_contents($filename, $replace);
+			}
+		}
+
+		return $files;
 	}
 
 	protected function createPackage($package = '', $files = array())
@@ -144,126 +217,6 @@ class ProjectTask extends Task
 		return true;
 	}
 
-	protected function changeVersion($version = '', $files = array())
-	{
-		$root  = $this->root . DIRECTORY_SEPARATOR;
-		$files = (!empty($files)) ? $files
-			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', '.gitignore', 'LICENSE', '*.md'));
-
-		if (empty($files)) return false;
-
-		foreach ($files as $path)
-		{
-			$file     = new PhingFile($root, $path);
-			$filename = $file->getAbsolutePath();
-			$original = file_get_contents($filename);
-			$replace  = preg_replace('/@version(\s*)(.?)*/', '@version${1}' . $version, $original);
-			$replace  = preg_replace('/\<version\>(.?)*<\/version\>/', '<version>' . $version . '</version>', $replace);
-
-			if ($original != $replace)
-			{
-				file_put_contents($filename, $replace);
-			}
-		}
-
-		return $files;
-	}
-
-	protected function changePhpStormCopyrights($version = '', $date = '')
-	{
-		$root = $this->root . DIRECTORY_SEPARATOR . '.idea/copyright';
-		if (!$files = $this->getFiles($root, array('profiles_settings.xml'))) return false;
-
-		foreach ($files as $path)
-		{
-			$filename = '../.idea/copyright/' . $path;
-			$original = file_get_contents($filename);
-			$replace  = preg_replace('/@version(\s*).+?\&#10/', '@version${1}' . $version . '&#10', $original);
-			$replace  = preg_replace('/@date(\s*).+?\&#10/', '@date${1}' . $date . '&#10;', $replace);
-
-			if ($original != $replace)
-			{
-				file_put_contents($filename, $replace);
-			}
-		}
-
-		return true;
-	}
-
-	protected function setVersion($version = '', $files = array())
-	{
-		$root  = $this->root . DIRECTORY_SEPARATOR;
-		$files = (!empty($files)) ? $files
-			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', '.gitignore', 'LICENSE', '*.md'));
-
-		if (empty($files)) return false;
-
-		foreach ($files as $path)
-		{
-			$file     = new PhingFile($root, $path);
-			$filename = $file->getAbsolutePath();
-			$original = file_get_contents($filename);
-			$replace  = str_replace('__DEPLOY_VERSION__', $version, $original);
-
-			if ($original != $replace)
-			{
-				file_put_contents($filename, $replace);
-			}
-		}
-
-		return $files;
-	}
-
-	protected function changeDate($date = '', $files = array())
-	{
-		$root  = $this->root . DIRECTORY_SEPARATOR;
-		$files = (!empty($files)) ? $files
-			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', '.gitignore', 'LICENSE', '*.md'));
-
-		if (empty($files)) return false;
-
-		foreach ($files as $path)
-		{
-			$file     = new PhingFile($root, $path);
-			$filename = $file->getAbsolutePath();
-			$original = file_get_contents($filename);
-			$replace  = preg_replace('/@date(\s*)(.?)*/', '@date${1}' . $date, $original);
-			$replace  = preg_replace('/\<date\>(.?)*<\/date\>/', '<date>' . $date . '</date>', $replace);
-			$replace  = preg_replace('/\<creationDate\>(.?)*<\/creationDate\>/', '<creationDate>' . $date . '</creationDate>', $replace);
-
-			if ($original != $replace)
-			{
-				file_put_contents($filename, $replace);
-			}
-		}
-
-		return $files;
-	}
-
-	protected function setDate($date = '', $files = array())
-	{
-		$root  = $this->root . DIRECTORY_SEPARATOR;
-		$files = (!empty($files)) ? $files
-			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', '.gitignore', 'LICENSE', '*.md'));
-
-		if (empty($files)) return false;
-
-		foreach ($files as $path)
-		{
-			$file     = new PhingFile($root, $path);
-			$filename = $file->getAbsolutePath();
-			$original = file_get_contents($filename);
-			$replace  = str_replace('__DEPLOY_DATE__', $date, $original);
-
-			if ($original != $replace)
-			{
-				file_put_contents($filename, $replace);
-			}
-		}
-
-		return $files;
-	}
-
 	protected function getFiles($directory = '../', $exclude = '')
 	{
 		$fileset = new FileSet();
@@ -278,7 +231,7 @@ class ProjectTask extends Task
 
 	protected function getPackageName($dev = false)
 	{
-		$version = ($dev) ? $this->dev . '_dev' : $this->release;
+		$version = ($dev) ? $this->devVersion : $this->release;
 
 		return $this->name . '_' . $version . '.zip';
 	}

@@ -3,7 +3,6 @@
 	<!--
 		@property  name     Project name (etc type_name)
 		@property  release  Release version (etc 1.0.0)
-		@property  dev      Developer version (etc 1.0.1)
 		@property  root     Base project Directory (etc ...)
 
 		@task  Info             Phing info show
@@ -13,23 +12,22 @@
 		@task  Package dev      Package developer version
 	-->
 	<property name="name" value="type_name"/>
-	<property name="release" value="0.0.0"/>
-	<property name="dev" value="0.0.1"/>
+	<property name="version" value="0.0.0"/>
 	<property name="root" value=".."/>
 	<taskdef name="project" classname="ProjectTask"/>
 	<target name="1. Info" description="Phing info show">
-		<project action="info" name="${name}" release="${release}" dev="${dev}" root="${root}"/>
+		<project action="info" name="${name}" version="${version}" root="${root}"/>
 	</target>
 	<target name="2. Prepare release" description="Change version to release version and set current creation date">
-		<project action="prepareRelease" name="${name}" release="${release}" root="${root}"/>
+		<project action="prepareRelease" name="${name}" version="${version}" root="${root}"/>
 	</target>
 	<target name="3. Package release" description="Package release version">
-		<project action="packageRelease" name="${name}" release="${release}" root="${root}"/>
+		<project action="packageRelease" name="${name}" version="${version}" root="${root}"/>
 	</target>
 	<target name="4. Reset for dev" description="Change version variables to developer version">
-		<project action="prepareDev" name="${name}" dev="${dev}" root="${root}"/>
+		<project action="prepareDev" name="${name}" version="${version}" root="${root}"/>
 	</target>
 	<target name="5. Package dev" description="Package developer version">
-		<project action="packageDev" name="${name}" dev="${dev}" root="${root}"/>
+		<project action="packageDev" name="${name}" version="${version}" root="${root}"/>
 	</target>
 </project>
