@@ -231,7 +231,7 @@ class ProjectTask extends Task
 
 	protected function getPackageName($dev = false)
 	{
-		$version = ($dev) ? $this->devVersion : $this->release;
+		$version = ($dev) ? $this->devVersion : $this->version;
 
 		return $this->name . '_' . $version . '.zip';
 	}
