@@ -6,4 +6,19 @@
       <option name="PHP" value="true" />
     </context>
   </template>
+  <template name="js_event_listener" value="addEventListener('$END$', function (element) {&#10;});" description="addEventListener" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="JAVA_SCRIPT" value="true" />
+    </context>
+  </template>
+  <template name="js_foreach" value="forEach(function ($END$) {&#10;});" description=".forEach(function" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="JAVA_SCRIPT" value="true" />
+    </context>
+  </template>
+  <template name="js_ajax" value="let request = new XMLHttpRequest(),&#10;&#9;requestUrl = '$END$',&#10;&#9;formData = new FormData();&#10;&#10;request.open('POST', requestUrl);&#10;request.send(new URLSearchParams(formData));&#10;request.onreadystatechange = function () {&#10;&#9;if (this.readyState === 4 &amp;&amp; this.status === 200) {&#10;&#9;&#9;let response = false;&#10;&#9;&#9;try {&#10;&#9;&#9;&#9;response = JSON.parse(this.response);&#10;&#9;&#9;} catch (e) {&#10;&#9;&#9;&#9;response = false;&#10;&#9;&#9;&#9;console.error(request.status + ' ' + request.message);&#10;&#9;&#9;&#9;return;&#10;&#9;&#9;}&#10;&#9;&#9;if (response.success) {&#10;&#9;&#9;&#9;console.log(response.data);&#10;&#9;&#9;&#9;document.dispatchEvent(new Event('DOMContentLoaded', {'bubbles': true}));&#10;&#9;&#9;} else {&#10;&#9;&#9;&#9;console.error(response.message);&#10;&#9;&#9;}&#10;&#9;} else if (this.readyState === 4 &amp;&amp; this.status !== 200) {&#10;&#9;&#9;console.error(request.status + ' ' + request.message);&#10;&#9;}&#10;};" description="Send ajax" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="JAVA_SCRIPT" value="true" />
+    </context>
+  </template>
 </templateSet>
