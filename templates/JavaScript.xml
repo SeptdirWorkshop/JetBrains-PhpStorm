@@ -21,4 +21,11 @@
       <option name="JAVA_SCRIPT" value="true" />
     </context>
   </template>
+  <template name="js_domloaded" value="document.addEventListener(&quot;DOMContentLoaded&quot;, function () {&#10;&#9;$END$&#10;});&#10;" description="DOMContentLoaded" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="HTML" value="true" />
+      <option name="JAVA_SCRIPT" value="true" />
+      <option name="PHP" value="true" />
+    </context>
+  </template>
 </templateSet>

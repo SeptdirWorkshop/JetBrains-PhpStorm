@@ -44,7 +44,7 @@
 					   default="900"/>
 				<field name="cachemode" type="hidden"
 					   default="static">
-					<option value="static">Static</option>
+					<option value="static"/>
 				</field>
 			</fieldset>
 		</fields>
