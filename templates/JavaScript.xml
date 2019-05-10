@@ -1,9 +1,7 @@
 <templateSet group="JavaScript">
   <template name="js_conlog" value="console.log($END$);" description="console.log()" toReformat="false" toShortenFQNames="true">
     <context>
-      <option name="HTML" value="true" />
       <option name="JAVA_SCRIPT" value="true" />
-      <option name="PHP" value="true" />
     </context>
   </template>
   <template name="js_event_listener" value="addEventListener('$END$', function (element) {&#10;});" description="addEventListener" toReformat="false" toShortenFQNames="true">
@@ -23,9 +21,7 @@
   </template>
   <template name="js_domloaded" value="document.addEventListener(&quot;DOMContentLoaded&quot;, function () {&#10;&#9;$END$&#10;});&#10;" description="DOMContentLoaded" toReformat="false" toShortenFQNames="true">
     <context>
-      <option name="HTML" value="true" />
       <option name="JAVA_SCRIPT" value="true" />
-      <option name="PHP" value="true" />
     </context>
   </template>
 </templateSet>
