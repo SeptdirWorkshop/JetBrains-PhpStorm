@@ -18,7 +18,6 @@
 		<folder type="component" id="com_name">com_name</folder>
 		<folder type="module" client="site/administrator" id="mod_name">mod_name</folder>
 		<folder type="plugin" group="group" id="name">plg_group_name</folder>
-		<folder type="files" id="folder" client="site">folder</folder>
 	</files>
 	<updateservers>
 		<server type="extension" priority="1" name="${PROJECT_NAME}">

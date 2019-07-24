@@ -1,29 +1,26 @@
 <code_scheme name="Joomla">
   <option name="OTHER_INDENT_OPTIONS">
     <value>
+      <option name="INDENT_SIZE" value="4" />
+      <option name="CONTINUATION_INDENT_SIZE" value="8" />
+      <option name="TAB_SIZE" value="4" />
       <option name="USE_TAB_CHARACTER" value="true" />
+      <option name="SMART_TABS" value="false" />
+      <option name="LABEL_INDENT_SIZE" value="0" />
+      <option name="LABEL_INDENT_ABSOLUTE" value="false" />
+      <option name="USE_RELATIVE_INDENTS" value="false" />
     </value>
   </option>
-  <HTMLCodeStyleSettings>
-    <option name="HTML_KEEP_WHITESPACES_INSIDE" value="pre,textarea" />
-  </HTMLCodeStyleSettings>
   <PHPCodeStyleSettings>
     <option name="ALIGN_KEY_VALUE_PAIRS" value="true" />
     <option name="ALIGN_PHPDOC_PARAM_NAMES" value="true" />
     <option name="ALIGN_PHPDOC_COMMENTS" value="true" />
     <option name="ALIGN_ASSIGNMENTS" value="true" />
-    <option name="PHPDOC_BLANK_LINE_BEFORE_TAGS" value="true" />
     <option name="PHPDOC_BLANK_LINES_AROUND_PARAMETERS" value="true" />
-    <option name="PHPDOC_WRAP_LONG_LINES" value="true" />
-    <option name="PHPDOC_PARAM_SPACES_BETWEEN_TAG_AND_TYPE" value="3" />
-    <option name="PHPDOC_PARAM_SPACES_BETWEEN_TYPE_AND_NAME" value="2" />
-    <option name="PHPDOC_PARAM_SPACES_BETWEEN_NAME_AND_DESCRIPTION" value="2" />
-    <option name="THROWS_WEIGHT" value="1" />
-    <option name="RETURN_WEIGHT" value="2" />
     <option name="LOWER_CASE_BOOLEAN_CONST" value="true" />
     <option name="LOWER_CASE_NULL_CONST" value="true" />
     <option name="VARIABLE_NAMING_STYLE" value="CAMEL_CASE" />
-    <option name="BLANK_LINES_BEFORE_RETURN_STATEMENT" value="1" />
+    <option name="BLANK_LINE_BEFORE_RETURN_STATEMENT" value="true" />
   </PHPCodeStyleSettings>
   <XML>
     <option name="XML_LEGACY_SETTINGS_IMPORTED" value="true" />

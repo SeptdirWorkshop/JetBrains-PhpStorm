@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.9" type="library" method="upgrade">
+	<name>${name}</name>
+	<libraryname>${libraryName}</libraryname>
+	<author>${author}</author>
+	<creationDate>${creationDate}</creationDate>
+	<copyright>${copyright}</copyright>
+	<license>${license}</license>
+	<authorEmail>${authorEmail}</authorEmail>
+	<authorUrl>${authorUrl}</authorUrl>
+	<version>${version}</version>
+	<files>
+		<folder>${sourceLibraryName}</folder>
+		<filename>${NAME}.php</filename>
+	</files>
+	<updateservers>
+		<server type="extension" priority="1" name="${PROJECT_NAME}">
+			https://site.com/update?extension=com_${NAME}
+		</server>
+	</updateservers>
+</extension>
