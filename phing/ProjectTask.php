@@ -179,16 +179,15 @@ class ProjectTask extends Task
 	{
 		$root      = $this->root . DIRECTORY_SEPARATOR;
 		$directory = $root . '.packages/';
+		if (file_exists($directory . $package))
+		{
+			return (unlink($directory . $package)) ? $this->createPackage($package, $files) : false;
+		}
 		$package   = $directory . $package;
 		$files     = (!empty($files)) ? $files
 			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', '.gitignore', 'LICENSE', '*.md'));
 
 		if (empty($files)) return false;
-
-		if (file_exists($package))
-		{
-			unlink($package);
-		}
 
 		$zip = new ZipArchive();
 		if ($zip->open($package, ZIPARCHIVE::CREATE) !== true)
