@@ -79,6 +79,40 @@ class ProjectTask extends Task
 		echo PHP_EOL;
 	}
 
+	protected function resetSince()
+	{
+		echo '==== Reset @since to  __DEPLOY_VERSION__' . PHP_EOL;
+
+		echo 'Find Files ....... ';
+		$root  = $this->root . DIRECTORY_SEPARATOR;
+		$files = (!empty($files)) ? $files
+			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', '.gitignore', 'LICENSE', '*.md'));
+		echo ($files) ? 'OK' : 'ERROR' . PHP_EOL;
+		echo PHP_EOL;
+
+		echo 'Replace since ....... ';
+		try
+		{
+			foreach ($files as $path)
+			{
+				$file     = new PhingFile($root, $path);
+				$filename = $file->getAbsolutePath();
+				$original = file_get_contents($filename);
+				$replace  = preg_replace('/@since(\s*)(.?)*/', '@since${1}' . '__DEPLOY_VERSION__', $original);
+				if ($original != $replace)
+				{
+					file_put_contents($filename, $replace);
+				}
+			}
+			echo 'OK';
+		}
+		catch (Exception $exception)
+		{
+			echo 'ERROR';
+		}
+		echo PHP_EOL;
+	}
+
 	protected function prepareDev()
 	{
 		echo '==== Prepare ' . $this->name . ' ' . $this->devVersion . ' Dev ===' . PHP_EOL;

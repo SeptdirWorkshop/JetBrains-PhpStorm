@@ -24,10 +24,13 @@
 	<target name="3. Package release" description="Package release version">
 		<project action="packageRelease" name="${name}" version="${version}" root="${root}"/>
 	</target>
-	<target name="4. Reset for dev" description="Change version variables to developer version">
+	<target name="4. Reset since" description="Change since variables to developer version">
+		<project action="resetSince" name="${name}" version="${version}" root="${root}"/>
+	</target>
+	<target name="5. Reset to dev" description="Change version variables to developer version">
 		<project action="prepareDev" name="${name}" version="${version}" root="${root}"/>
 	</target>
-	<target name="5. Package dev" description="Package developer version">
+	<target name="6. Package dev" description="Package developer version">
 		<project action="packageDev" name="${name}" version="${version}" root="${root}"/>
 	</target>
 </project>
