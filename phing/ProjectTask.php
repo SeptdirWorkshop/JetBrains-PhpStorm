@@ -1,4 +1,12 @@
 <?php
+/**
+ * @package    wpAtomS
+ * @version    __DEPLOY_VERSION__
+ * @author     Septdir Workshop - septdir.com
+ * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
+ * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
+ * @link       https://www.septdir.com/
+ */
 
 class ProjectTask extends Task
 {
@@ -86,7 +94,7 @@ class ProjectTask extends Task
 		echo 'Find Files ....... ';
 		$root  = $this->root . DIRECTORY_SEPARATOR;
 		$files = (!empty($files)) ? $files
-			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', '.gitignore', 'LICENSE', '*.md'));
+			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', '.gitignore', 'composer.json', 'LICENSE', '*.md'));
 		echo ($files) ? 'OK' : 'ERROR' . PHP_EOL;
 		echo PHP_EOL;
 
@@ -138,7 +146,7 @@ class ProjectTask extends Task
 	{
 		$root  = $this->root . DIRECTORY_SEPARATOR;
 		$files = (!empty($files)) ? $files
-			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', '.gitignore', 'LICENSE', '*.md'));
+			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', '.gitignore', 'composer.json', 'LICENSE', '*.md'));
 
 		if (empty($files)) return false;
 
@@ -152,6 +160,7 @@ class ProjectTask extends Task
 			$original = file_get_contents($filename);
 			$replace  = preg_replace('/@version(\s*)(.?)*/', '@version${1}' . $docVersion, $original);
 			$replace  = preg_replace('/\<version\>(.?)*<\/version\>/', '<version>' . $version . '</version>', $replace);
+			$replace  = preg_replace('/\*Version:(\s*)(.?)*/', '* Version:${1}' . $version, $replace);
 			$replace  = str_replace('__DEPLOY_VERSION__', $deployVersion, $replace);
 			if ($original != $replace)
 			{
@@ -187,7 +196,7 @@ class ProjectTask extends Task
 	{
 		$root  = $this->root . DIRECTORY_SEPARATOR;
 		$files = (!empty($files)) ? $files
-			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', '.gitignore', 'LICENSE', '*.md'));
+			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', '.gitignore', 'composer.json', 'LICENSE', '*.md'));
 
 		if (empty($files)) return false;
 
@@ -219,7 +228,7 @@ class ProjectTask extends Task
 		}
 		$package   = $directory . $package;
 		$files     = (!empty($files)) ? $files
-			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', '.gitignore', 'LICENSE', '*.md'));
+			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', '.gitignore', 'composer.json', 'LICENSE', '*.md'));
 
 		if (empty($files)) return false;
 

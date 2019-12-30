@@ -14,4 +14,11 @@
       <option name="PHP" value="true" />
     </context>
   </template>
+  <template name="DEPLOY" value="__DEPLOY_VERSION__" description="__DEPLOY_VERSION__" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="HTML" value="true" />
+      <option name="JAVA_SCRIPT" value="true" />
+      <option name="PHP" value="true" />
+    </context>
+  </template>
 </templateSet>
