@@ -1,0 +1,31 @@
+{
+	"name": "${PROJECT_NAME}",
+	"version": "${version}",
+	"description": "${description}",
+	"private": true,
+	"scripts": {
+		"compile_project": "webpack"
+	},
+	"keywords": [],
+	"author": "${author}",
+	"license": "${license}",
+	"dependencies": {
+		"@babel/core": "latest",
+		"@babel/preset-env": "latest",
+		"babel-loader": "latest",
+		"css-loader": "latest",
+		"csso-webpack-plugin": "latest",
+		"file-loader": "latest",
+		"glob": "latest",
+		"ignore-emit-webpack-plugin": "latest",
+		"image-webpack-loader": "latest",
+		"mini-css-extract-plugin": "latest",
+		"sass": "latest",
+		"sass-loader": "latest",
+		"svg-sprite-loader": "latest",
+		"uglifyjs-webpack-plugin": "latest",
+		"webpack": "latest",
+		"webpack-cli": "latest",
+		"yargs": "latest"
+	}
+}
