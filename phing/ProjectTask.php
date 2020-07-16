@@ -146,7 +146,7 @@ class ProjectTask extends Task
 	{
 		$root  = $this->root . DIRECTORY_SEPARATOR;
 		$files = (!empty($files)) ? $files
-			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', '.gitignore', 'composer.json', 'LICENSE', '*.md'));
+			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', 'node_modules/', '.gitignore', 'composer.json', 'webpack.config.js', 'package-lock.json', 'LICENSE', '*.md'));
 
 		if (empty($files)) return false;
 
@@ -196,7 +196,7 @@ class ProjectTask extends Task
 	{
 		$root  = $this->root . DIRECTORY_SEPARATOR;
 		$files = (!empty($files)) ? $files
-			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', '.gitignore', 'composer.json', 'LICENSE', '*.md'));
+			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', 'node_modules/', '.gitignore', 'composer.json', 'package-lock.json', 'webpack.config.js', 'LICENSE', '*.md'));
 
 		if (empty($files)) return false;
 
@@ -226,9 +226,9 @@ class ProjectTask extends Task
 		{
 			return (unlink($directory . $package)) ? $this->createPackage($package, $files) : false;
 		}
-		$package   = $directory . $package;
-		$files     = (!empty($files)) ? $files
-			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', '.gitignore', 'composer.json', 'LICENSE', '*.md'));
+		$package = $directory . $package;
+		$files   = (!empty($files)) ? $files
+			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', 'node_modules/', '.gitignore', 'composer.json', 'package.json', 'package-lock.json', 'webpack.config.js', 'LICENSE', '*.md'));
 
 		if (empty($files)) return false;
 
