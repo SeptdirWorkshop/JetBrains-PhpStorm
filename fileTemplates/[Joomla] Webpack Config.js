@@ -30,13 +30,15 @@ directories.forEach((directory) => {
 
 			let value = file.replace(/^\.\//, ''),
 				key = value.replace('.es6', '');
-			if (!value.match(/^src\//)) {
-				es6[key] = './' + value;
-				es6[key + '.min'] = './' + value;
+			if (!value.match(/^src\/js\/modules/)) {
+				if (!es6.development) es6.development = {};
+				if (!es6.production) es6.production = {};
+
+				es6.development[key] = './' + value;
+				es6.production[key + '.min'] = './' + value;
 			}
 		});
 	}
-
 
 	// SCSS
 	let scssFiles = glob.sync('./' + clean + '/**/*.scss');
@@ -44,10 +46,8 @@ directories.forEach((directory) => {
 		scssFiles.forEach((file) => {
 			let value = file.replace(/^\.\//, ''),
 				key = value.replace('.scss', '');
-			if (!value.match(/^src\//)) {
-				scss[key] = './' + value;
-				ignoreSCSSEmits.push(key + '.js');
-			}
+			scss[key] = './' + value;
+			ignoreSCSSEmits.push(key + '.js');
 		});
 	}
 
@@ -57,10 +57,8 @@ directories.forEach((directory) => {
 		imagesFiles.forEach((file) => {
 			let value = file.replace(/^\.\//, ''),
 				key = value;
-			if (!value.match(/^src\//)) {
-				images[key] = './' + value;
-				ignoreImagesEmits.push(key + '.js');
-			}
+			images[key] = './' + value;
+			ignoreImagesEmits.push(key + '.js');
 		});
 	}
 
@@ -69,8 +67,7 @@ directories.forEach((directory) => {
 	if (spritesFiles.length > 0) {
 		spritesFiles.forEach((file) => {
 			let sprite = path.dirname(file).replace(/^\.\//, '').replace('.sprite', '')
-
-			if (!sprite.match(/^src\//) && sprites.indexOf(sprite) === -1) {
+			if (sprites.indexOf(sprite) === -1) {
 				sprites.push(sprite)
 			}
 		});
@@ -84,42 +81,61 @@ const TerserPlugin = require('terser-webpack-plugin'),
 	IgnoreEmitPlugin = require('ignore-emit-webpack-plugin'),
 	SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 module.exports = [];
-if (Object.keys(es6).length > 0) {
-	module.exports.push({
-		mode: 'production',
-		name: 'javascript',
-		entry: es6,
-		output: {
-			filename: '[name].js',
-			path: path.resolve(__dirname)
-		},
-		optimization: {
-			minimize: true,
-			minimizer: [
-				new TerserPlugin({
-					include: /\.min\.js$/,
-					terserOptions: {
-						output: {
-							comments: false,
+
+if (Object.keys(es6.development).length > 0) {
+	// ES6 development
+	module.exports.push(
+		{
+			mode: 'development',
+			name: 'es6_development',
+			devtool: 'source-map',
+			entry: es6.development,
+			output: {
+				filename: '[name].js',
+				path: path.resolve(__dirname)
+			},
+			module: {
+				rules: [
+					{
+						test: /\.es6$/,
+						use: [{loader: 'babel-loader'}]
+					}
+				]
+			}
+		});
+
+	// ES6 production
+	module.exports.push(
+		{
+			mode: 'production',
+			name: 'es6_production',
+			entry: es6.production,
+			output: {
+				filename: '[name].js',
+				path: path.resolve(__dirname)
+			},
+			module: {
+				rules: [
+					{
+						test: /\.es6$/,
+						use: [{loader: 'babel-loader'}]
+					}
+				]
+			},
+			optimization: {
+				minimize: true,
+				minimizer: [
+					new TerserPlugin({
+						terserOptions: {
+							output: {
+								comments: false,
+							},
 						},
-					},
-					extractComments: false,
-				}),
-			],
-		},
-		module: {
-			rules: [
-				{
-					test: /\.es6$/,
-					use:
-						{
-							loader: 'babel-loader',
-							options: {presets: [["@babel/preset-env"]]}
-						}
-				}
-			]
-		}
-	});
+						extractComments: false,
+					}),
+				],
+			}
+		});
 }
 if (Object.keys(scss).length > 0) {
 	module.exports.push({
