@@ -23,7 +23,7 @@
 		"sass": "latest",
 		"sass-loader": "latest",
 		"svg-sprite-loader": "latest",
-		"uglifyjs-webpack-plugin": "latest",
+		"terser-webpack-plugin": "latest",
 		"webpack": "latest",
 		"webpack-cli": "latest",
 		"yargs": "latest"

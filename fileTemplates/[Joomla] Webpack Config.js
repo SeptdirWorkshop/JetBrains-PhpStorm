@@ -78,11 +78,11 @@ directories.forEach((directory) => {
 });
 
 // Add to export
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin'),
+const  TerserPlugin = require('terser-webpack-plugin'),
 	CssoWebpackPlugin = require('csso-webpack-plugin').default,
 	MiniCssExtractPlugin = require('mini-css-extract-plugin'),
 	IgnoreEmitPlugin = require('ignore-emit-webpack-plugin'),
-	SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
+	SpriteLoaderPlugin = require('svg-sprite-loader/plugin').constructor
 module.exports = [];
 if (Object.keys(es6).length > 0) {
 	module.exports.push({
@@ -95,21 +95,17 @@ if (Object.keys(es6).length > 0) {
 		},
 		optimization: {
 			minimize: true,
-			minimizer: [new UglifyJsPlugin({
-				include: /\.min\.js$/,
-				uglifyOptions: {
-					test: /\.js(\?.*)?$/i,
-					warnings: false,
-					parse: {},
-					compress: {},
-					mangle: true,
-					output: null,
-					toplevel: false,
-					nameCache: null,
-					ie8: false,
-					keep_fnames: false,
-				}
-			})]
+			minimizer: [
+				new TerserPlugin({
+					include: /\.min\.js$/,
+					terserOptions: {
+						output: {
+							comments: false,
+						},
+					},
+					extractComments: false,
+				}),
+			],
 		},
 		module: {
 			rules: [
