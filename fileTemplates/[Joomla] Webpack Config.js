@@ -27,12 +27,16 @@ directories.forEach((directory) => {
 	let es6Files = glob.sync('./' + clean + '/**/*.es6');
 	if (es6Files.length > 0) {
 		es6Files.forEach((file) => {
+
 			let value = file.replace(/^\.\//, ''),
 				key = value.replace('.es6', '');
-			es6[key] = './' + value;
-			es6[key + '.min'] = './' + value;
+			if (!value.match(/^src\//)) {
+				es6[key] = './' + value;
+				es6[key + '.min'] = './' + value;
+			}
 		});
 	}
+
 
 	// SCSS
 	let scssFiles = glob.sync('./' + clean + '/**/*.scss');
@@ -40,8 +44,10 @@ directories.forEach((directory) => {
 		scssFiles.forEach((file) => {
 			let value = file.replace(/^\.\//, ''),
 				key = value.replace('.scss', '');
-			scss[key] = './' + value;
-			ignoreSCSSEmits.push(key + '.js');
+			if (!value.match(/^src\//)) {
+				scss[key] = './' + value;
+				ignoreSCSSEmits.push(key + '.js');
+			}
 		});
 	}
 
@@ -51,8 +57,10 @@ directories.forEach((directory) => {
 		imagesFiles.forEach((file) => {
 			let value = file.replace(/^\.\//, ''),
 				key = value;
-			images[key] = './' + value;
-			ignoreImagesEmits.push(key + '.js');
+			if (!value.match(/^src\//)) {
+				images[key] = './' + value;
+				ignoreImagesEmits.push(key + '.js');
+			}
 		});
 	}
 
@@ -62,7 +70,7 @@ directories.forEach((directory) => {
 		spritesFiles.forEach((file) => {
 			let sprite = path.dirname(file).replace(/^\.\//, '').replace('.sprite', '')
 
-			if (sprites.indexOf(sprite) === -1) {
+			if (!sprite.match(/^src\//) && sprites.indexOf(sprite) === -1) {
 				sprites.push(sprite)
 			}
 		});
