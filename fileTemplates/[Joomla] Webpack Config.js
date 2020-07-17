@@ -6,13 +6,10 @@ const argv = require('yargs').argv,
 
 // Get files
 let directories = argv.directory,
-	es6 = {},
-	scss = {},
-	ignoreSCSSEmits = [],
-	images = {},
-	ignoreImagesEmits = [],
-	sprites = [];
+	entry = {},
+	ignore = {};
 
+// Directories
 if (directories) {
 	if (!Array.isArray(directories)) {
 		directories = [argv.directory];
@@ -21,83 +18,123 @@ if (directories) {
 	directories = ['./'];
 }
 directories.forEach((directory) => {
-	let clean = directory.replace(/^\.\//, '');
+	let files, clean = directory.replace(/^\.\//, '');
 
-	// ES6
-	let es6Files = glob.sync('./' + clean + '/**/*.es6');
-	if (es6Files.length > 0) {
-		es6Files.forEach((file) => {
-
+	// Javascript
+	files = glob.sync('./' + clean + '/**/*.es6');
+	if (files.length > 0) {
+		files.forEach((file) => {
 			let value = file.replace(/^\.\//, ''),
 				key = value.replace('.es6', '');
-			if (!value.match(/^src\//)) {
-				es6[key] = './' + value;
-				es6[key + '.min'] = './' + value;
+
+			if (!value.match(/^src\/js\/modules/)) {
+				if (!entry.js) entry.js = {};
+				if (!entry.js.development) entry.js.development = {};
+				if (!entry.js.production) entry.js.production = {};
+				entry.js.development[key] = './' + value;
+				entry.js.production[key + '.min'] = './' + value;
 			}
 		});
 	}
 
-
-	// SCSS
-	let scssFiles = glob.sync('./' + clean + '/**/*.scss');
-	if (scssFiles.length > 0) {
-		scssFiles.forEach((file) => {
+	// StyleSheet
+	files = glob.sync('./' + clean + '/**/*.+(scss|less)');
+	if (files.length > 0) {
+		files.forEach((file) => {
 			let value = file.replace(/^\.\//, ''),
-				key = value.replace('.scss', '');
-			if (!value.match(/^src\//)) {
-				scss[key] = './' + value;
-				ignoreSCSSEmits.push(key + '.js');
-			}
+				key = value.replace('.scss|.less', '');
+
+			if (!entry.css) entry.css = {};
+			entry.css[key] = './' + value;
+
+			if (!ignore.emit) ignore.emit = {};
+			if (!ignore.emit.css) ignore.emit.css = [];
+			ignore.emit.css.push(key + '.js');
 		});
 	}
 
-	// Images
-	let imagesFiles = glob.sync('./' + clean + '/**/*.+(svg|png|jpg|jpeg|gif)');
-	if (imagesFiles.length > 0) {
-		imagesFiles.forEach((file) => {
+	// Image
+	files = glob.sync('./' + clean + '/**/*.+(svg|png|jpg|jpeg|gif)');
+	if (files.length > 0) {
+		files.forEach((file) => {
 			let value = file.replace(/^\.\//, ''),
 				key = value;
-			if (!value.match(/^src\//)) {
-				images[key] = './' + value;
-				ignoreImagesEmits.push(key + '.js');
-			}
+
+			if (!entry.image) entry.image = {};
+			entry.image[key] = './' + value;
+
+			if (!ignore.emit) ignore.emit = {};
+			if (!ignore.emit.image) ignore.emit.image = [];
+			ignore.emit.image.push(key + '.js');
 		});
 	}
 
-	// Sprites
-	let spritesFiles = glob.sync('./' + clean + '/**/*.sprite/*.svg');
-	if (spritesFiles.length > 0) {
-		spritesFiles.forEach((file) => {
-			let sprite = path.dirname(file).replace(/^\.\//, '').replace('.sprite', '')
+	// Sprite
+	files = glob.sync('./' + clean + '/**/*.sprite/*.svg');
+	if (files.length > 0) {
+		files.forEach((file) => {
+			let value = path.dirname(file).replace(/^\.\//, ''),
+				key = value.replace('.sprite', '')
 
-			if (!sprite.match(/^src\//) && sprites.indexOf(sprite) === -1) {
-				sprites.push(sprite)
-			}
+			if (!entry.sprite) entry.sprite = {};
+			entry.sprite[key] = value;
 		});
 	}
 });
 
-// Add to export
-const TerserPlugin = require('terser-webpack-plugin'),
-	CssoWebpackPlugin = require('csso-webpack-plugin').default,
-	MiniCssExtractPlugin = require('mini-css-extract-plugin'),
+
+// Prepare configs
+if (Object.keys(entry).length === 0) throw 'Files not founds';
+const configs = [],
+	CSSOWebpackPlugin = require('csso-webpack-plugin').default,
 	IgnoreEmitPlugin = require('ignore-emit-webpack-plugin'),
-	SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
-module.exports = [];
-if (Object.keys(es6).length > 0) {
-	module.exports.push({
-		mode: 'production',
-		name: 'javascript',
-		entry: es6,
+	MiniCssExtractPlugin = require('mini-css-extract-plugin'),
+	SpriteLoaderPlugin = require('svg-sprite-loader/plugin'),
+	TerserPlugin = require('terser-webpack-plugin');
+
+// Javascript
+if (entry.js) {
+	// Development
+	configs.push({
+		mode: 'development',
+		name: 'Javascript Development',
+		devtool: 'source-map',
+		entry: entry.js.development,
 		output: {
 			filename: '[name].js',
 			path: path.resolve(__dirname)
+		},
+		module: {
+			rules: [
+				{
+					test: /\.es6$/,
+					use: [{loader: 'babel-loader'}]
+				}
+			]
+		}
+	});
+
+	// Production
+	configs.push({
+		mode: 'production',
+		name: 'Javascript Production',
+		entry: entry.js.production,
+		output: {
+			filename: '[name].js',
+			path: path.resolve(__dirname)
+		},
+		module: {
+			rules: [
+				{
+					test: /\.es6$/,
+					use: [{loader: 'babel-loader'}]
+				}
+			]
 		},
 		optimization: {
 			minimize: true,
 			minimizer: [
 				new TerserPlugin({
-					include: /\.min\.js$/,
 					terserOptions: {
 						output: {
 							comments: false,
@@ -106,26 +143,17 @@ if (Object.keys(es6).length > 0) {
 					extractComments: false,
 				}),
 			],
-		},
-		module: {
-			rules: [
-				{
-					test: /\.es6$/,
-					use:
-						{
-							loader: 'babel-loader',
-							options: {presets: [["@babel/preset-env"]]}
-						}
-				}
-			]
 		}
 	});
 }
-if (Object.keys(scss).length > 0) {
-	module.exports.push({
+
+// StyleSheet
+if (entry.css) {
+	configs.push({
 		mode: 'development',
-		name: 'stylesheet',
-		entry: scss,
+		name: 'StyleSheet',
+		entry: entry.css,
+		devtool: 'source-map',
 		output: {
 			filename: '[name].js',
 			path: path.resolve(__dirname)
@@ -139,8 +167,36 @@ if (Object.keys(scss).length > 0) {
 					test: /\.(sa|sc|c)ss$/,
 					use: [
 						MiniCssExtractPlugin.loader,
-						'css-loader',
-						'sass-loader'
+						{
+							loader: 'css-loader',
+							options: {
+								sourceMap: true,
+							},
+						},
+						{
+							loader: 'sass-loader',
+							options: {
+								sourceMap: true,
+							},
+						},
+					],
+				},
+				{
+					test: /\.less$/,
+					use: [
+						MiniCssExtractPlugin.loader,
+						{
+							loader: 'css-loader',
+							options: {
+								sourceMap: true,
+							},
+						},
+						{
+							loader: 'less-loader',
+							options: {
+								sourceMap: true,
+							},
+						},
 					],
 				},
 			]
@@ -150,18 +206,20 @@ if (Object.keys(scss).length > 0) {
 				filename: '[name].css',
 				chunkFilename: '[id].css',
 			}),
-			new CssoWebpackPlugin({
+			new CSSOWebpackPlugin({
 				pluginOutputPostfix: 'min'
 			}),
-			new IgnoreEmitPlugin(ignoreSCSSEmits)
+			new IgnoreEmitPlugin(ignore.emit.css)
 		],
 	});
 }
-if (Object.keys(images).length > 0) {
-	module.exports.push({
+
+// Image
+if (entry.image) {
+	configs.push({
 		mode: 'production',
-		name: 'images',
-		entry: images,
+		name: 'Image',
+		entry: entry.image,
 		output: {
 			filename: '[name].js',
 			path: path.resolve(__dirname)
@@ -181,40 +239,46 @@ if (Object.keys(images).length > 0) {
 			],
 		},
 		plugins: [
-			new IgnoreEmitPlugin(ignoreImagesEmits)
+			new IgnoreEmitPlugin(ignore.emit.image)
 		],
 	});
 }
-if (sprites.length > 0) {
-	sprites.forEach((sprite, i) => {
-		module.exports.push(
-			{
-				mode: 'production',
-				name: 'sprite_' + i,
-				entry: {
-					sprite: glob.sync(path.resolve(__dirname, sprite + '.sprite/*.svg')),
-				},
-				output: {
-					filename: '[name].js',
-					path: path.resolve(__dirname)
-				},
-				module: {
-					rules: [
-						{
-							test: /\.svg$/,
-							loader: 'svg-sprite-loader',
-							include: path.resolve(__dirname, sprite + '.sprite'),
-							options: {
-								extract: true,
-								spriteFilename: sprite + '.svg',
-							},
+
+// Sprite
+if (entry.sprite) {
+	Object.keys(entry.sprite).forEach((key) => {
+		let value = entry.sprite[key];
+		configs.push({
+			mode: 'production',
+			name: 'Sprite ' + key,
+			devtool: 'source-map',
+			entry: {
+				sprite: glob.sync(path.resolve(__dirname, value + '/*.svg')),
+			},
+			output: {
+				filename: '[name].js',
+				path: path.resolve(__dirname)
+			},
+			module: {
+				rules: [
+					{
+						test: /\.svg$/,
+						loader: 'svg-sprite-loader',
+						include: path.resolve(__dirname, value),
+						options: {
+							extract: true,
+							spriteFilename: key + '.svg',
 						},
-					],
-				},
-				plugins: [
-					new SpriteLoaderPlugin(),
-					new IgnoreEmitPlugin([sprite + '.js', 'sprite.js'])
+					},
 				],
-			});
+			},
+			plugins: [
+				new SpriteLoaderPlugin(),
+				new IgnoreEmitPlugin([key + '.js', 'sprite.js'])
+			]
+		})
 	});
 }
+
+// Add configs
+module.exports = configs;
