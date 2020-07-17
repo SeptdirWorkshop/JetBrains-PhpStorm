@@ -78,11 +78,11 @@ directories.forEach((directory) => {
 });
 
 // Add to export
-const  TerserPlugin = require('terser-webpack-plugin'),
+const TerserPlugin = require('terser-webpack-plugin'),
 	CssoWebpackPlugin = require('csso-webpack-plugin').default,
 	MiniCssExtractPlugin = require('mini-css-extract-plugin'),
 	IgnoreEmitPlugin = require('ignore-emit-webpack-plugin'),
-	SpriteLoaderPlugin = require('svg-sprite-loader/plugin').constructor
+	SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 module.exports = [];
 if (Object.keys(es6).length > 0) {
 	module.exports.push({
