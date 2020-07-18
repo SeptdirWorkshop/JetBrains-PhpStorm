@@ -42,14 +42,22 @@ directories.forEach((directory) => {
 	if (files.length > 0) {
 		files.forEach((file) => {
 			let value = file.replace(/^\.\//, ''),
-				key = value.replace('.scss|.less', '');
+				key = value.replace(/.scss|.less/, '');
 
-			if (!entry.css) entry.css = {};
-			entry.css[key] = './' + value;
+			if (!value.match(/^node_modules/)) {
+				if (!entry.css) entry.css = {};
+				if (!entry.css.development) entry.css.development = {};
+				if (!entry.css.production) entry.css.production = {};
+				entry.css.development[key] = './' + value;
+				entry.css.production[key + '.min'] = './' + value;
 
-			if (!ignore.emit) ignore.emit = {};
-			if (!ignore.emit.css) ignore.emit.css = [];
-			ignore.emit.css.push(key + '.js');
+				if (!ignore.emit) ignore.emit = {};
+				if (!ignore.emit.css) ignore.emit.css = {};
+				if (!ignore.emit.css.development) ignore.emit.css.development = [];
+				if (!ignore.emit.css.production) ignore.emit.css.production = [];
+				ignore.emit.css.development.push(key + '.js');
+				ignore.emit.css.production.push(key + '.min.js');
+			}
 		});
 	}
 
@@ -60,12 +68,14 @@ directories.forEach((directory) => {
 			let value = file.replace(/^\.\//, ''),
 				key = value;
 
-			if (!entry.image) entry.image = {};
-			entry.image[key] = './' + value;
+			if (!value.match(/^node_modules/)) {
+				if (!entry.image) entry.image = {};
+				entry.image[key] = './' + value;
 
-			if (!ignore.emit) ignore.emit = {};
-			if (!ignore.emit.image) ignore.emit.image = [];
-			ignore.emit.image.push(key + '.js');
+				if (!ignore.emit) ignore.emit = {};
+				if (!ignore.emit.image) ignore.emit.image = [];
+				ignore.emit.image.push(key + '.js');
+			}
 		});
 	}
 
@@ -76,8 +86,10 @@ directories.forEach((directory) => {
 			let value = path.dirname(file).replace(/^\.\//, ''),
 				key = value.replace('.sprite', '')
 
-			if (!entry.sprite) entry.sprite = {};
-			entry.sprite[key] = value;
+			if (!value.match(/^node_modules/)) {
+				if (!entry.sprite) entry.sprite = {};
+				entry.sprite[key] = value;
+			}
 		});
 	}
 });
@@ -149,17 +161,15 @@ if (entry.js) {
 
 // StyleSheet
 if (entry.css) {
+	// Development
 	configs.push({
 		mode: 'development',
-		name: 'StyleSheet',
-		entry: entry.css,
+		name: 'StyleSheet Development',
+		entry: entry.css.development,
 		devtool: 'source-map',
 		output: {
 			filename: '[name].js',
 			path: path.resolve(__dirname)
-		},
-		optimization: {
-			minimize: false
 		},
 		module: {
 			rules: [
@@ -206,10 +216,49 @@ if (entry.css) {
 				filename: '[name].css',
 				chunkFilename: '[id].css',
 			}),
-			new CSSOWebpackPlugin({
-				pluginOutputPostfix: 'min'
+			new IgnoreEmitPlugin(ignore.emit.css.development)
+		],
+	});
+
+	// Production
+	configs.push({
+		mode: 'production',
+		name: 'StyleSheet Production',
+		entry: entry.css.production,
+		output: {
+			filename: '[name].js',
+			path: path.resolve(__dirname)
+		},
+		optimization: {
+			minimize: true
+		},
+		module: {
+			rules: [
+				{
+					test: /\.(sa|sc|c)ss$/,
+					use: [
+						MiniCssExtractPlugin.loader,
+						'css-loader',
+						'sass-loader'
+					],
+				},
+				{
+					test: /\.less$/,
+					use: [
+						MiniCssExtractPlugin.loader,
+						'css-loader',
+						'less-loader',
+					],
+				},
+			]
+		},
+		plugins: [
+			new MiniCssExtractPlugin({
+				filename: '[name].css',
+				chunkFilename: '[id].css',
 			}),
-			new IgnoreEmitPlugin(ignore.emit.css)
+			new CSSOWebpackPlugin({}),
+			new IgnoreEmitPlugin(ignore.emit.css.production)
 		],
 	});
 }

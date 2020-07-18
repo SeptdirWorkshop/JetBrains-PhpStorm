@@ -4,12 +4,12 @@
 	"description": "${description}",
 	"private": true,
 	"scripts": {
-		"compile_project": "webpack --progress --colors"
+		"project": "webpack --progress --colors"
 	},
 	"keywords": [],
 	"author": "${author}",
 	"license": "${license}",
-		"dependencies": {
+	"dependencies": {
 		"@babel/core": "~7",
 		"@babel/preset-env": "~7",
 		"babel-loader": "~8",
