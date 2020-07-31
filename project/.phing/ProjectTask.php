@@ -86,7 +86,7 @@ class ProjectTask extends Task
 		echo 'Find Files ....... ';
 		$root  = $this->root . DIRECTORY_SEPARATOR;
 		$files = (!empty($files)) ? $files
-			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', '.gitignore', 'composer.json', 'LICENSE', '*.md'));
+			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', 'build/', '.gitignore', 'LICENSE', '*.md'));
 		echo ($files) ? 'OK' : 'ERROR' . PHP_EOL;
 		echo PHP_EOL;
 
