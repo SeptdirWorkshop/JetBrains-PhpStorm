@@ -1,12 +1,4 @@
 <?php
-/**
- * @package    wpAtomS
- * @version    __DEPLOY_VERSION__
- * @author     Septdir Workshop - septdir.com
- * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
- * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
- * @link       https://www.septdir.com/
- */
 
 class ProjectTask extends Task
 {
@@ -146,7 +138,7 @@ class ProjectTask extends Task
 	{
 		$root  = $this->root . DIRECTORY_SEPARATOR;
 		$files = (!empty($files)) ? $files
-			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', 'node_modules/', '.gitignore', 'composer.json', 'webpack.config.js', 'package-lock.json', 'LICENSE', '*.md'));
+			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', 'build/', '.gitignore', 'LICENSE', '*.md'));
 
 		if (empty($files)) return false;
 
@@ -166,6 +158,13 @@ class ProjectTask extends Task
 			{
 				file_put_contents($filename, $replace);
 			}
+		}
+
+		$package = $root . '/build/package.json';
+		if ($context = @file_get_contents($package))
+		{
+			$context = preg_replace('/"version": "(.?)*"/', '"version": "' . $version . '"', $context);
+			file_put_contents($package, $context);
 		}
 
 		return $files;
@@ -196,7 +195,7 @@ class ProjectTask extends Task
 	{
 		$root  = $this->root . DIRECTORY_SEPARATOR;
 		$files = (!empty($files)) ? $files
-			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', 'node_modules/', '.gitignore', 'composer.json', 'package-lock.json', 'webpack.config.js', 'LICENSE', '*.md'));
+			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', 'build/', '.gitignore', 'LICENSE', '*.md'));
 
 		if (empty($files)) return false;
 
@@ -228,7 +227,7 @@ class ProjectTask extends Task
 		}
 		$package = $directory . $package;
 		$files   = (!empty($files)) ? $files
-			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', 'node_modules/', '.gitignore', 'composer.json', 'package.json', 'package-lock.json', 'webpack.config.js', 'LICENSE', '*.md'));
+			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', 'build/', '.gitignore', 'LICENSE', '*.md'));
 
 		if (empty($files)) return false;
 
