@@ -1,6 +1,5 @@
 .idea
 .vscode
 .phing
-.packages
 node_modules
 package-lock.json
