@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.9" type="template" client="${client}" method="upgrade">
+	<name>${templateName}</name>
+	<author>${author}</author>
+	<creationDate>${creationDate}</creationDate>
+	<copyright>${copyright}</copyright>
+	<license>${license}</license>
+	<authorEmail>${authorEmail}</authorEmail>
+	<authorUrl>${authorUrl}</authorUrl>
+	<version>${version}</version>
+	<description>${LANGUAGE_CONSTANT}_DESCRIPTION</description>
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.tpl_${templateName}.ini</language>
+		<language tag="en-GB">en-GB/en-GB.tpl_${templateName}.sys.ini</language>
+		<language tag="ru-RU">ru-RU/ru-RU.tpl_${templateName}.ini</language>
+		<language tag="ru-RU">ru-RU/ru-RU.tpl_${templateName}.sys.ini</language>
+	</languages>
+	<files>
+		<folder>css</folder>
+		<folder>html</folder>
+		<folder>images</folder>
+		<folder>js</folder>
+		<filename>favicon.ico</filename>
+		<filename>helper.php</filename>
+		<filename>index.php</filename>
+		<filename>templateDetails.xml</filename>
+	</files>
+	<positions>
+		<position>scripts</position>
+	</positions>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+			</fieldset>	
+		</fields>
+	</config>
+	<updateservers>
+		<server type="extension" priority="1" name="${LANGUAGE_CONSTANT}">
+			https://site.com/update?extension=tpl_${templateName}
+		</server>
+	</updateservers>
+</extension>
