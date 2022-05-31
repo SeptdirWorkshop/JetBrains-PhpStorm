@@ -138,7 +138,7 @@ class ProjectTask extends Task
 	{
 		$root  = $this->root . DIRECTORY_SEPARATOR;
 		$files = (!empty($files)) ? $files
-			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', 'build/', '.gitignore', 'LICENSE', '*.md'));
+			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', 'build/node_modules', '.gitignore', 'LICENSE', '*.md'));
 
 		if (empty($files)) return false;
 
