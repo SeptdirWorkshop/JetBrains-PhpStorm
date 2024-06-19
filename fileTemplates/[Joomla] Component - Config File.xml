@@ -1,13 +1,14 @@
 <?xml version="1.0"?>
-<config>
+<config addfieldprefix="">
+	<inlinehelp button="show"/>
 	<fieldset name="global" label="JGLOBAL_FIELDSET_OPTIONS">
+		<field name="sef_advanced" type="hidden" default="1"/>
 	</fieldset>
 	<fieldset name="permissions"
  		label="JCONFIG_PERMISSIONS_LABEL"
  		description="JCONFIG_PERMISSIONS_DESC">
 		<field name="rules" type="rules"
  			label="JCONFIG_PERMISSIONS_LABEL"
- 			class="inputbox"
  			validate="rules"
  			filter="rules"
  			component="${component}"

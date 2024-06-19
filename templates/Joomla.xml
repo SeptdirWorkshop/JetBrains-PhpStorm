@@ -1,5 +1,5 @@
 <templateSet group="Joomla">
-  <template name="jdef" value="defined('_JEXEC') or die;$END$" description="defined('_JEXEC') or die" toReformat="false" toShortenFQNames="true">
+  <template name="jdef" value="\defined('_JEXEC') or die;$END$" description="defined('_JEXEC') or die" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>

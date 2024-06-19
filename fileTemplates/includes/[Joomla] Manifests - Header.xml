@@ -1,0 +1,12 @@
+#set($name_lower = ${extension_name.toLowerCase()})
+#set($name_upper = ${extension_name.toUpperCase()})
+#set($part = "")
+#set($name_camel = "")
+#foreach($part in $name.split("_"))
+    #set($name_camel = $name_camel + $part.substring(0, 1).toUpperCase() + $part.substring(1))
+#end
+#set($prefix_lower = ${prefix.toLowerCase()})
+#set($prefix_upper = ${prefix.toUpperCase()})
+#set($constant = "${prefix_upper}_${name_upper}")
+#set($extension = "${prefix_lower}_${name_lower}")
+<?xml version="1.0" encoding="utf-8"?>

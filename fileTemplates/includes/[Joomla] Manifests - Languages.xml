@@ -1,0 +1,6 @@
+<languages folder="${languages}">
+    <language tag="en-GB">language/en-GB/en-GB.${extension}.ini</language>
+    <language tag="en-GB">language/en-GB/en-GB.${extension}.sys.ini</language>
+    <language tag="ru-RU">language/ru-RU/ru-RU.${extension}.ini</language>
+    <language tag="ru-RU">language/ru-RU/ru-RU.${extension}.sys.ini</language>
+</languages>

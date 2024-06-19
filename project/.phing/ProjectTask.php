@@ -121,6 +121,11 @@ class ProjectTask extends Task
 		echo ($files = $this->replaceVersion($this->devVersion)) ? 'OK' : 'ERROR';
 		echo PHP_EOL;
 
+		$date = date('F Y');
+		echo 'Replace date .......... ';
+		echo ($files = $this->replaceDate($date, $files)) ? 'OK' : 'ERROR';
+		echo PHP_EOL;
+
 		echo 'Check PhpStorm copyrights ....... ';
 		echo ($files = $this->checkPhpStormCopyrights('__DEPLOY_VERSION__', date('F Y'))) ? 'OK' : 'ERROR';
 		echo PHP_EOL;
@@ -138,7 +143,7 @@ class ProjectTask extends Task
 	{
 		$root  = $this->root . DIRECTORY_SEPARATOR;
 		$files = (!empty($files)) ? $files
-			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', 'build/node_modules', '.gitignore', 'LICENSE', '*.md'));
+			: $this->getFiles($root, array('.idea/', '.packages/', '.phing/', 'build/node_modules/', '.gitignore', 'LICENSE', '*.md'));
 
 		if (empty($files)) return false;
 
@@ -154,6 +159,12 @@ class ProjectTask extends Task
 			$replace  = preg_replace('/\<version\>(.?)*<\/version\>/', '<version>' . $version . '</version>', $replace);
 			$replace  = preg_replace('/\*Version:(\s*)(.?)*/', '* Version:${1}' . $version, $replace);
 			$replace  = str_replace('__DEPLOY_VERSION__', $deployVersion, $replace);
+			if (strpos($path, 'joomla.asset.json') !== false)
+			{
+				$json    = json_decode($replace);
+				$replace = str_replace('"version": "' . $json->version . '",',
+					'"version": "' . $version . '",', $replace);
+			}
 			if ($original != $replace)
 			{
 				file_put_contents($filename, $replace);

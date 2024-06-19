@@ -1,0 +1,44 @@
+#set($prefix = "com")
+#set($extension_name = ${name})
+#set($packagename= "")
+#set($namespace = "Joomla\Component")
+#set($layouts_destination = "components")
+#parse("[Joomla] Manifests - Header.xml")
+<extension type="component" method="upgrade">
+#parse("[Joomla] Manifests - Information.xml")
+	<install>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+		</sql>
+	</install>
+	<uninstall>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+		</sql>
+	</uninstall>
+    <files folder="site">
+		<folder>forms</folder>
+		<folder>src</folder>
+		<folder>tmpl</folder>
+	</files>
+    #set($languages = "site")
+    #parse("[Joomla] Manifests - Languages.xml")
+	<administration>
+		<menu>$constant</menu>
+		<files folder="admin">
+			<folder>forms</folder>
+			<folder>presets</folder>
+			<folder>services</folder>
+			<folder>sql</folder>
+			<folder>src</folder>
+			<folder>tmpl</folder>
+			<filename>access.xml</filename>
+			<filename>config.xml</filename>
+		</files>
+        #set($languages = "admin")
+        #parse("[Joomla] Manifests - Languages.xml")
+	</administration>
+    #parse("[Joomla] Manifests - Media.xml")
+    #parse("[Joomla] Manifests - Layouts.xml")
+    #parse("[Joomla] Manifests - Updates.xml")
+</extension>

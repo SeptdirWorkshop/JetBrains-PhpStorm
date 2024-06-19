@@ -1,0 +1,12 @@
+<templateSet group="ES6">
+  <template name="es6_domloaded" value="document.addEventListener('DOMContentLoaded', () =&gt; {&#10;&#9;$END$&#10;});&#10;" description="DOMContentLoaded" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="JAVA_SCRIPT" value="true" />
+    </context>
+  </template>
+  <template name="es6_foreach" value="forEach(($END$) =&gt; {&#10;});" description=".forEach(function" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="JAVA_SCRIPT" value="true" />
+    </context>
+  </template>
+</templateSet>

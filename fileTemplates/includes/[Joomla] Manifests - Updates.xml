@@ -1,0 +1,7 @@
+#if (${updateserver})
+	<updateservers>
+		<server type="extension" priority="1" name="${PROJECT_NAME}">
+			$updateserver
+		</server>
+	</updateservers>
+#end
