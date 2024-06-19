@@ -1,6 +1,7 @@
 #set($prefix = "com")
 #set($extension_name = ${name})
-#set($packagename= "")
+#set($packagename = "")
+#set($languages_sys = "")
 #set($namespace = "Joomla\Component")
 #set($layouts_destination = "components")
 #parse("[Joomla] Manifests - Header.xml")

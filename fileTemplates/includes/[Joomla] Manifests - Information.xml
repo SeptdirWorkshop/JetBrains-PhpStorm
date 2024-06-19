@@ -1,6 +1,6 @@
 <name>$constant</name>
 #if($packagename)
-<packagename>$packagename</packagename>
+	<packagename>$packagename</packagename>
 #end
 <author>${author}</author>
 <creationDate>${creationDate}</creationDate>
@@ -11,6 +11,6 @@
 <version>${version}</version>
 <description>${constant}_DESCRIPTION</description>
 #if($namespace)
-<namespace path="src">$namespace\\$name_camel</namespace>
+	<namespace path="src">$namespace\\$name_camel</namespace>
 #end
 <scriptfile>script.php</scriptfile>

@@ -8,10 +8,11 @@
     #set($group_camel = $group_camel + $part.substring(0, 1).toUpperCase() + $part.substring(1))
 #end
 #set($prefix = "plg_${group_lower}")
-#set($packagename= "")
+#set($packagename = "")
 #set($namespace = "Joomla\Plugin\\${group_camel}")
 #set($layouts_destination = "plugins/${group_lower}")
 #set($languages = "language")
+#set($languages_sys = "")
 #parse("[Joomla] Manifests - Header.xml")
 <extension type="plugin" group="${group}" method="upgrade">
 	 #parse("[Joomla] Manifests - Information.xml")

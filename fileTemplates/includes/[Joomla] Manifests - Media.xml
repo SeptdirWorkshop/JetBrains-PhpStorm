@@ -1,13 +1,13 @@
 #if (${media})
 	<media destination="$extension" folder="media">
 	    #if($media.contains("css"))
-		<folder>css</folder>
+			<folder>css</folder>
 		#end
 		#if($media.contains("js"))
-		<folder>js</folder>
+			<folder>js</folder>
 		#end
 		#if($media.contains("im"))
-		<folder>images</folder>
+			<folder>images</folder>
 		#end
 		<filename>joomla.asset.json</filename>
 	</media>
