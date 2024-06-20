@@ -12,6 +12,7 @@
     <default_templates>
       <template name="[Joomla] Component - Access File.xml" file-name="access.xml" reformat="true" live-template-enabled="false" />
       <template name="[Joomla] Component - Config File.xml" file-name="config.xml" reformat="true" live-template-enabled="false" />
+      <template name="[Joomla] Install Script.php" file-name="script.php" reformat="true" live-template-enabled="false" />
       <template name="[Joomla] Languages.ini" file-name="language/en-GB/${NAME}" reformat="true" live-template-enabled="false">
         <template name="[Joomla] Languages.ini.child.2.ini" file-name="language/en-GB/${NAME}.sys" reformat="true" live-template-enabled="false" />
         <template name="[Joomla] Languages.ini.child.1.ini" file-name="language/ru-RU/${NAME}.sys" reformat="true" live-template-enabled="false" />
@@ -24,6 +25,7 @@
       <template name="[Joomla] Manifests - Module.xml" file-name="mod_${name}.xml" reformat="true" live-template-enabled="false" />
       <template name="[Joomla] Manifests - Package.xml" file-name="pkg_${name}" reformat="true" live-template-enabled="false" />
       <template name="[Joomla] Manifests - Plugin.xml" file-name="${name}.xml" reformat="true" live-template-enabled="false" />
+      <template name="[Joomla] Web Assets.json" file-name="joomla.asset.json" reformat="true" live-template-enabled="false" />
     </default_templates>
   </component>
 </application>
