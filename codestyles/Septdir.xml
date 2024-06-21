@@ -4,6 +4,7 @@
       <option name="USE_TAB_CHARACTER" value="true" />
     </value>
   </option>
+  <option name="LINE_SEPARATOR" value="&#10;" />
   <HTMLCodeStyleSettings>
     <option name="HTML_KEEP_WHITESPACES_INSIDE" value="pre,textarea" />
   </HTMLCodeStyleSettings>
