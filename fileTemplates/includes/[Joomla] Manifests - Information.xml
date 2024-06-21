@@ -1,0 +1,16 @@
+<name>$constant</name>
+#if($packagename)
+	<packagename>$packagename</packagename>
+#end
+<author>${author}</author>
+<creationDate>${creationDate}</creationDate>
+<copyright>${copyright}</copyright>
+<license>${license}</license>
+<authorEmail>${authorEmail}</authorEmail>
+<authorUrl>${authorUrl}</authorUrl>
+<version>${version}</version>
+<description>${constant}_DESCRIPTION</description>
+#if($namespace)
+	<namespace path="src">$namespace\\$name_camel</namespace>
+#end
+<scriptfile>script.php</scriptfile>

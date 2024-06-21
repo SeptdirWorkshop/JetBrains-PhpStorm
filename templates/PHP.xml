@@ -9,7 +9,7 @@
       <option name="PHP" value="true" />
     </context>
   </template>
-  <template name="obj" value="new stdClass();$END$" description="new stdClass" toReformat="false" toShortenFQNames="true">
+  <template name="obj" value="new \stdClass();$END$" description="new stdClass" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="PHP" value="true" />
     </context>

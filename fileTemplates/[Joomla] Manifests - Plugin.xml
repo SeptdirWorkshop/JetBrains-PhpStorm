@@ -1,0 +1,33 @@
+#set($extension_name = ${name})
+#set($extension_group = ${group})
+#set($group_lower = ${extension_group.toLowerCase()})
+#set($group_upper = ${extension_group.toUpperCase()})
+#set($part = "")
+#set($group_camel = "")
+#foreach($part in $extension_group.split("_"))
+    #set($group_camel = $group_camel + $part.substring(0, 1).toUpperCase() + $part.substring(1))
+#end
+#set($prefix = "plg_${group_lower}")
+#set($packagename = "")
+#set($namespace = "Joomla\Plugin\\${group_camel}")
+#set($layouts_destination = "plugins/${group_lower}")
+#set($languages = "language")
+#set($languages_sys = "")
+#parse("[Joomla] Manifests - Header.xml")
+<extension type="plugin" group="${group}" method="upgrade">
+	 #parse("[Joomla] Manifests - Information.xml")
+	 #parse("[Joomla] Manifests - Languages.xml")
+	<files>
+		<folder>services</folder>
+		<folder plugin="${name_lower}">src</folder>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+			</fieldset>	
+		</fields>
+	</config>
+	#parse("[Joomla] Manifests - Media.xml")
+	#parse("[Joomla] Manifests - Layouts.xml")
+    #parse("[Joomla] Manifests - Updates.xml")
+</extension>

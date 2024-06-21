@@ -1,0 +1,54 @@
+<TaskOptions>
+  <TaskOptions>
+    <option name="arguments" value="--config=dev.js" />
+    <option name="checkSyntaxErrors" value="true" />
+    <option name="description" />
+    <option name="exitCodeBehavior" value="ERROR" />
+    <option name="fileExtension" value="es6" />
+    <option name="immediateSync" value="true" />
+    <option name="name" value="Webpack.es6" />
+    <option name="output" value="$ProjectFileDir$" />
+    <option name="outputFilters">
+      <array>
+        <FilterInfo>
+          <option name="description" value="" />
+          <option name="name" value="" />
+          <option name="regExp" value="$ProjectFileDir$\build" />
+        </FilterInfo>
+      </array>
+    </option>
+    <option name="outputFromStdout" value="false" />
+    <option name="program" value="$ProjectFileDir$/build/node_modules/.bin/webpack" />
+    <option name="runOnExternalChanges" value="true" />
+    <option name="scopeName" value="Project Files" />
+    <option name="trackOnlyRoot" value="true" />
+    <option name="workingDir" value="$ProjectFileDir$/build" />
+    <envs />
+  </TaskOptions>
+  <TaskOptions>
+    <option name="arguments" value="--config=dev.js" />
+    <option name="checkSyntaxErrors" value="true" />
+    <option name="description" />
+    <option name="exitCodeBehavior" value="ERROR" />
+    <option name="fileExtension" value="scss" />
+    <option name="immediateSync" value="true" />
+    <option name="name" value="Webpack.scss" />
+    <option name="output" value="$ProjectFileDir$" />
+    <option name="outputFilters">
+      <array>
+        <FilterInfo>
+          <option name="description" value="" />
+          <option name="name" value="" />
+          <option name="regExp" value="$ProjectFileDir$\build" />
+        </FilterInfo>
+      </array>
+    </option>
+    <option name="outputFromStdout" value="false" />
+    <option name="program" value="$ProjectFileDir$/build/node_modules/.bin/webpack" />
+    <option name="runOnExternalChanges" value="true" />
+    <option name="scopeName" value="Project Files" />
+    <option name="trackOnlyRoot" value="true" />
+    <option name="workingDir" value="$ProjectFileDir$/build" />
+    <envs />
+  </TaskOptions>
+</TaskOptions>

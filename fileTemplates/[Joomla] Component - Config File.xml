@@ -1,0 +1,21 @@
+#set($extension = $component)
+#if(!$extension.startsWith("com_"))
+    #set($extension = "com_$extension")
+#end
+<?xml version="1.0"?>
+<config addfieldprefix="">
+	<inlinehelp button="show"/>
+	<fieldset name="global" label="JGLOBAL_FIELDSET_OPTIONS">
+		<field name="sef_advanced" type="hidden" default="1"/>
+	</fieldset>
+	<fieldset name="permissions"
+ 		label="JCONFIG_PERMISSIONS_LABEL"
+ 		description="JCONFIG_PERMISSIONS_DESC">
+		<field name="rules" type="rules"
+ 			label="JCONFIG_PERMISSIONS_LABEL"
+ 			validate="rules"
+ 			filter="rules"
+ 			component="${extension}"
+ 			section="component" />
+	</fieldset>
+</config>

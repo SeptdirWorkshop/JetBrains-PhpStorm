@@ -1,0 +1,47 @@
+#set($prefix = "pkg")
+#set($packagename = ${name})
+#set($extension_name = ${packagename})
+#set($languages_sys = "true")
+#set($namespace = "")
+#set($languages = "language")
+#set($languages_sys = "true")
+#parse("[Joomla] Manifests - Header.xml")
+<extension type="package" method="upgrade">
+	#parse("[Joomla] Manifests - Information.xml")
+	#parse("[Joomla] Manifests - Languages.xml")
+	<files>
+		#if(${componentName})
+			#set($pkg_extension_name = "com_${componentName.toLowerCase()}")
+			#set($pkg_extension = "com_${pkg_extension_name}")
+			<folder type="component" id="$pkg_extension">$pkg_extension</folder>
+		#end
+		#if(${moduleName})
+			#set($pkg_extension_name = "${moduleName.toLowerCase()}")
+			#set($pkg_extension = "mod_${pkg_extension_name}")
+			#set($pkg_extension_client = "site")
+			#if(${moduleClient})
+				#set($pkg_extension_client = ${moduleClient.toLowerCase()})
+			#end			
+			<folder type="module" client="${pkg_extension_client}" id="$pkg_extension">$pkg_extension</folder>
+		#end
+		#if(${pluginName})
+			#set($pkg_extension_name = "${pluginName.toLowerCase()}")
+			#set($pkg_extension_group = "system")
+			#if(${pluginGroup})
+				#set($pkg_extension_group = "${pluginGroup.toLowerCase()}")
+			#end
+			#set($pkg_extension = "plg_${pkg_extension_group}_${pkg_extension_name}")
+			<folder type="plugin" group="$pkg_extension_group" id="$pkg_extension_name">$pkg_extension</folder>
+		#end
+		#if(${templateName})
+			#set($pkg_extension_name = "${templateName.toLowerCase()}")
+			#set($pkg_extension = "tpl_${pkg_extension_name}")
+			#set($pkg_extension_client = "site")
+			#if(${templateClient})
+				#set($pkg_extension_client = ${templateClient.toLowerCase()})
+			#end			
+			<folder type="template" client="${pkg_extension_client}" id="$pkg_extension">$pkg_extension</folder>
+		#end
+	</files>
+	#parse("[Joomla] Manifests - Updates.xml")
+</extension>

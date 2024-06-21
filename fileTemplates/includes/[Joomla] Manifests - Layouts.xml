@@ -1,0 +1,4 @@
+#if (${layouts})
+    <layouts destination="$layouts_destination/$name" folder="layouts">
+	</layouts>
+#end
