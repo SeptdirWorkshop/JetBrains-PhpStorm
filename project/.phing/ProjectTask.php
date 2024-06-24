@@ -155,9 +155,8 @@ class ProjectTask extends Task
 		echo ($files = $this->replaceVersion($this->devVersion)) ? 'OK' : 'ERROR';
 		echo PHP_EOL;
 
-		$date = date('F Y');
 		echo 'Replace date .......... ';
-		echo ($files = $this->replaceDate($date, $files)) ? 'OK' : 'ERROR';
+		echo ($files = $this->replaceDate($files)) ? 'OK' : 'ERROR';
 		echo PHP_EOL;
 
 		echo 'Check PhpStorm copyrights ....... ';
@@ -196,9 +195,12 @@ class ProjectTask extends Task
 			$replace  = str_replace('__DEPLOY_VERSION__', $deployVersion, $replace);
 			if (strpos($path, '.json') !== false)
 			{
-				$json    = json_decode($replace);
-				$replace = str_replace('"version": "' . $json->version . '",',
-					'"version": "' . $version . '",', $replace);
+				$json = json_decode($replace);
+				if (!empty($json->version))
+				{
+					$replace = str_replace('"version": "' . $json->version . '",',
+						'"version": "' . $version . '",', $replace);
+				}
 			}
 			if ($original != $replace)
 			{
@@ -236,7 +238,10 @@ class ProjectTask extends Task
 		$files = (!empty($files)) ? $files
 			: $this->getFiles($root, ['.idea/', '.packages/', '.phing/', 'node_modules/', '.gitignore', 'LICENSE', '*.md']);
 
-		if (empty($files)) return false;
+		if (empty($files))
+		{
+			return false;
+		}
 
 		foreach ($files as $path)
 		{
