@@ -287,7 +287,7 @@ return new class () implements ServiceProviderInterface {
 					// Check joomla version
 					if (!(new Version())->isCompatible(\$this->minimumJoomla))
 					{
-						\$app->enqueueMessage(Text::sprintf(\$constant . '_ERROR_COMPATIBLE_JOOMLA', \$this->minimumJoomla),
+						\$app->enqueueMessage(Text::sprintf(\$this->constant . '_ERROR_COMPATIBLE_JOOMLA', \$this->minimumJoomla),
 							'error');
 
 						return false;
@@ -298,7 +298,7 @@ return new class () implements ServiceProviderInterface {
 					// Check PHP
 					if (!(version_compare(PHP_VERSION, \$this->minimumPhp) >= 0))
 					{
-						\$app->enqueueMessage(Text::sprintf(\$constant . '_ERROR_COMPATIBLE_PHP', \$this->minimumPhp),
+						\$app->enqueueMessage(Text::sprintf(\$this->constant . '_ERROR_COMPATIBLE_PHP', \$this->minimumPhp),
 							'error');
 
 						return false;
@@ -318,7 +318,7 @@ return new class () implements ServiceProviderInterface {
 
 						if (!(version_compare(\$serverVersion, \$this->minimumMariaDb) >= 0))
 						{
-							\$app->enqueueMessage(Text::sprintf(\$constant . '_ERROR_COMPATIBLE_DATABASE',
+							\$app->enqueueMessage(Text::sprintf(\$this->constant . '_ERROR_COMPATIBLE_DATABASE',
 								\$this->minimumMySQL, \$this->minimumMariaDb), 'error');
 
 							return false;
@@ -329,7 +329,7 @@ return new class () implements ServiceProviderInterface {
 					#if (${minimumMariaDb})
 					if (\$serverType == 'mysql' && !(version_compare(\$serverVersion, \$this->minimumMySQL) >= 0))
 					{
-						\$app->enqueueMessage(Text::sprintf(\$constant . '_ERROR_COMPATIBLE_DATABASE',
+						\$app->enqueueMessage(Text::sprintf(\$this->constant . '_ERROR_COMPATIBLE_DATABASE',
 							\$this->minimumMySQL, \$this->minimumMariaDb), 'error');
 
 						return false;
