@@ -22,7 +22,7 @@
 		<folder>src</folder>
 		<folder>tmpl</folder>
 	</files>
-    #set($languages = "site")
+    #set($languages = "site/language")
     #parse("[Joomla] Manifests - Languages.xml")
 	<administration>
 		<menu>$constant</menu>
@@ -36,7 +36,7 @@
 			<filename>access.xml</filename>
 			<filename>config.xml</filename>
 		</files>
-        #set($languages = "admin")
+        #set($languages = "admin/language")
         #parse("[Joomla] Manifests - Languages.xml")
 	</administration>
     #parse("[Joomla] Manifests - Media.xml")

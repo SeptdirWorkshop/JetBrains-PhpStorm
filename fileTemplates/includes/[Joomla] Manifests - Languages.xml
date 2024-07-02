@@ -1,10 +1,10 @@
 <languages folder="${languages}">
 	#if (!${languages_sys})
-    	<language tag="en-GB">language/en-GB/${extension}.ini</language>
+    	<language tag="en-GB">en-GB/${extension}.ini</language>
     #end
-    <language tag="en-GB">language/en-GB/${extension}.sys.ini</language>
+    <language tag="en-GB">en-GB/${extension}.sys.ini</language>
     #if (!${languages_sys})
-    	<language tag="ru-RU">language/ru-RU/${extension}.ini</language>
+    	<language tag="ru-RU">ru-RU/${extension}.ini</language>
     #end
-    <language tag="ru-RU">language/ru-RU/${extension}.sys.ini</language>
+    <language tag="ru-RU">ru-RU/${extension}.sys.ini</language>
 </languages>
