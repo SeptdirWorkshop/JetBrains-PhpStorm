@@ -8,13 +8,19 @@
 
 use Joomla\CMS\Application\AdministratorApplication;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScriptInterface;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Log\Log;
 use Joomla\CMS\Version;
 use Joomla\Database\DatabaseDriver;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
+use Joomla\Filesystem\Folder;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Path;
+use Joomla\Registry\Registry;
 
 return new class () implements ServiceProviderInterface {
 	public function register(Container \$container)
@@ -138,8 +144,8 @@ return new class () implements ServiceProviderInterface {
 				{	
 					#if (${enablePlugin})				
 					\$this->enablePlugin(\$adapter);
+					
 					#end
-
 					return true;
 				}
 
@@ -154,9 +160,11 @@ return new class () implements ServiceProviderInterface {
 				 */
 				public function update(InstallerAdapter \$adapter): bool
 				{
+					#if (${refreshMediaVersion})
 					// Refresh media version
 					(new Version())->refreshMediaVersion();
 
+					#end
 					return true;
 				}
 
@@ -209,6 +217,7 @@ return new class () implements ServiceProviderInterface {
 				 */
 				public function postflight(string \$type, InstallerAdapter \$adapter): bool
 				{
+					\$installer = \$adapter->getParent();
 					if (\$type !== 'uninstall')
 					{
 						#if (${parseLayouts})
