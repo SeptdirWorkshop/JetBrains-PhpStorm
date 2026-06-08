@@ -20,7 +20,9 @@ class ProjectTask extends Task
 		'**/vendor/**',
 		'**/.gitignore',
 		'**/LICENSE',
-		'**/*.md,'
+		'**/*.md,',
+		'**/inspection_results/**',
+		'**/ai_generation/**',
 	];
 	protected array $packageExcludes = [
 		'**/.idea/**',
@@ -31,7 +33,9 @@ class ProjectTask extends Task
 		'**/build/**',
 		'**/.gitignore',
 		'**/LICENSE',
-		'**/*.md,'
+		'**/*.md,',
+		'**/inspection_results/**',
+		'**/ai_generation/**',
 	];
 
 	public function setAction($action)
