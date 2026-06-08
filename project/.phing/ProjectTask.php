@@ -12,30 +12,24 @@ class ProjectTask extends Task
 	protected ?string $version = null;
 	protected ?string $devVersion = null;
 	protected ?string $date = null;
+
 	protected array $filesExcludes = [
-		'**/.idea/**',
-		'**/.packages/**',
-		'**/.phing/**',
+		'**/.*/**',
 		'**/node_modules/**',
 		'**/vendor/**',
 		'**/.gitignore',
 		'**/LICENSE',
-		'**/*.md,',
-		'**/inspection_results/**',
-		'**/ai_generation/**',
+		'**/*.md',
 	];
+
 	protected array $packageExcludes = [
-		'**/.idea/**',
-		'**/.packages/**',
-		'**/.phing/**',
+		'**/.*/**',
 		'**/node_modules/**',
 		'**/vendor/**',
 		'**/build/**',
 		'**/.gitignore',
 		'**/LICENSE',
-		'**/*.md,',
-		'**/inspection_results/**',
-		'**/ai_generation/**',
+		'**/*.md',
 	];
 
 	public function setAction($action)

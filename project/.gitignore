@@ -1,6 +1,5 @@
-.idea
-.vscode
-.phing
-.packages
+.*/
+AGENTS.md
 node_modules
 package-lock.json
+build/dev.js
